@@ -1,0 +1,6 @@
+baseline dot decimals: ok 9.88
+same rows, comma decimals only: raises ValueError
+store_b rows with commas turned into dots: ok 16.58
+store_b rows as exported (commas): raises ValueError
+empty list: raises ZeroDivisionError
+empty list plus one valid row: ok 10.00

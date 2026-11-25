@@ -1,0 +1,3 @@
+store_a.csv: read 3 rows -> ok average=16.58
+store_b.csv: read 3 rows -> raises ValueError
+store_c.csv: read 0 rows -> raises ZeroDivisionError

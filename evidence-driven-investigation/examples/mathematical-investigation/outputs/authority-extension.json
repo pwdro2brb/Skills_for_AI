@@ -1,0 +1,50 @@
+{
+  "rationale": "The objective is to decide the conjecture; either a refutation or a proof closes it",
+  "authorities": {},
+  "claim_types": {
+    "conjecture-decided": {
+      "description": "A conjecture is either refuted by a verified counterexample or proven",
+      "rationale": "Union of the base claim types conjecture-refuted and theorem-valid; adds no weaker clause",
+      "any_of": [
+        [
+          {
+            "authorities": [
+              "counterexample-search",
+              "numerical-test"
+            ],
+            "min": 1
+          },
+          {
+            "authorities": [
+              "independent-calculation",
+              "symbolic-computation"
+            ],
+            "min": 1
+          }
+        ],
+        [
+          {
+            "authorities": [
+              "reviewed-proof"
+            ],
+            "min": 1
+          }
+        ],
+        [
+          {
+            "authorities": [
+              "formal-proof"
+            ],
+            "min": 1
+          },
+          {
+            "authorities": [
+              "formalization-review"
+            ],
+            "min": 1
+          }
+        ]
+      ]
+    }
+  }
+}

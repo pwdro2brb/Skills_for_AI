@@ -1,0 +1,74 @@
+{
+  "counts": {
+    "contradictions": 0,
+    "contradictions_open": 0,
+    "evidence": 4,
+    "evidence_active": 4,
+    "findings": 3,
+    "hypotheses": 4,
+    "obligations": 1,
+    "obligations_closed": 1,
+    "probes": 2,
+    "unknowns": 1,
+    "unknowns_open": 0
+  },
+  "gates": [
+    {
+      "description": "At least one obligation exists",
+      "failures": [],
+      "id": "G1",
+      "passed": true
+    },
+    {
+      "description": "Every critical obligation is CLOSED",
+      "failures": [],
+      "id": "G2",
+      "passed": true
+    },
+    {
+      "description": "No critical unknown is open",
+      "failures": [],
+      "id": "G3",
+      "passed": true
+    },
+    {
+      "description": "No critical contradiction is open",
+      "failures": [],
+      "id": "G4",
+      "passed": true
+    },
+    {
+      "description": "Verification is separate from construction for every closed obligation",
+      "failures": [],
+      "id": "G5",
+      "passed": true
+    },
+    {
+      "description": "Limitations are recorded",
+      "failures": [],
+      "id": "G6",
+      "passed": true
+    },
+    {
+      "description": "Nothing outside the critical set is pending, waived or out of scope",
+      "failures": [],
+      "id": "G7",
+      "passed": true
+    },
+    {
+      "description": "Mode requirements are met",
+      "failures": [
+        "rigorous mode needs review evidence from a collector other than the producer(s) ['single-agent']"
+      ],
+      "id": "G8",
+      "passed": false
+    }
+  ],
+  "ledger_digest": "a171cdf37329df2d0273e113499082ec9b1e829df96fe57e4b0ce96023fa1a61",
+  "mode": "rigorous",
+  "reasons": [
+    "rigorous mode needs review evidence from a collector other than the producer(s) ['single-agent']"
+  ],
+  "state": "COMPLETE_WITH_LIMITATIONS",
+  "warnings": []
+}

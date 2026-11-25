@@ -1,0 +1,1 @@
+work/edited.sav: speed set to 200, checksum recomputed

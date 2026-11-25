@@ -1,0 +1,5 @@
+work/s1.sav (28 bytes) vs work/s2.sav (28 bytes)
+magic b'TSAV' vs b'TSAV'
+offset  6 (0x06):    1 ->    2
+offset  8 (0x08):   46 ->   66
+offset 10 (0x0A):  100 ->  120

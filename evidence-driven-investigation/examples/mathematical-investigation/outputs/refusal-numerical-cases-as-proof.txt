@@ -1,0 +1,2 @@
+error: Refusing to write: the change introduces validation errors:
+ERROR H03 H-0001: VERIFIED without sufficient verification_evidence: claim type 'theorem-valid' requires 1x[reviewed-proof] OR 1x[formal-proof] AND 1x[formalization-review]; have ['numerical-test']

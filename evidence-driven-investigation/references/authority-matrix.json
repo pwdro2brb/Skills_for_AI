@@ -1,0 +1,283 @@
+{
+  "version": 1,
+  "description": "Minimum evidence authority per claim type. Read by scripts/ledger_core.py. A claim type is satisfied when ANY clause in any_of is satisfied; a clause is satisfied when EVERY requirement in it is met by distinct ACTIVE evidence records (one record never counts twice in the same clause). Extend per investigation with ledger.authority_extensions, never by editing this file during an investigation.",
+  "authorities": {
+    "compiler": {
+      "description": "A real compiler or build system was run on the code and its result recorded.",
+      "source_types": ["static", "test"]
+    },
+    "linter": {
+      "description": "A linter was run and its output recorded.",
+      "source_types": ["static"]
+    },
+    "type-checker": {
+      "description": "A type checker was run and its output recorded.",
+      "source_types": ["static"]
+    },
+    "static-analysis": {
+      "description": "Reading or analyzing code or a binary without executing it: source reading, disassembler, decompiler, analyzer, cross-references. Never establishes that code executed.",
+      "source_types": ["static"]
+    },
+    "byte-inspection": {
+      "description": "Direct inspection of bytes: hex dump, hashes, magic numbers, strings, offsets.",
+      "source_types": ["static"]
+    },
+    "version-diff": {
+      "description": "Comparison between two identified versions of an artifact.",
+      "source_types": ["static"]
+    },
+    "unit-test": {
+      "description": "Unit tests executed. Establishes behavior of the unit in the test environment only, not of the packaged artifact.",
+      "source_types": ["test"]
+    },
+    "integration-test": {
+      "description": "Integration tests executed across real component boundaries.",
+      "source_types": ["test"]
+    },
+    "property-test": {
+      "description": "Property-based tests executed with recorded seeds or example counts.",
+      "source_types": ["test"]
+    },
+    "fuzzing": {
+      "description": "Fuzzing campaign executed with recorded corpus, duration and seed.",
+      "source_types": ["test"]
+    },
+    "packaged-artifact-test": {
+      "description": "The built, packaged or shipped artifact itself was exercised in its target form.",
+      "source_types": ["test", "runtime"]
+    },
+    "benchmark": {
+      "description": "A benchmark executed with recorded environment, repetitions and variance.",
+      "source_types": ["test", "runtime"]
+    },
+    "runtime-trace": {
+      "description": "Observation of actual execution: trace, log, debugger, profiler, instrumentation.",
+      "source_types": ["runtime"]
+    },
+    "controlled-mutation": {
+      "description": "One variable was changed on purpose while others were held fixed, and the effect was observed by execution. Includes reproduce -> change -> revert experiments on code.",
+      "source_types": ["runtime", "test"]
+    },
+    "emulation": {
+      "description": "Execution under an emulator or simulator. Not evidence about real hardware or the real world unless the emulator's fidelity for this behavior is itself established.",
+      "source_types": ["runtime"]
+    },
+    "round-trip-comparison": {
+      "description": "Parse/serialize (or decode/encode) round trip compared byte for byte or field for field with the original.",
+      "source_types": ["test", "calculation"]
+    },
+    "schema-validation": {
+      "description": "Data validated against an explicit schema by a tool.",
+      "source_types": ["test", "calculation"]
+    },
+    "independent-calculation": {
+      "description": "The value was recomputed by a tool or route independent of the one that produced it.",
+      "source_types": ["calculation"]
+    },
+    "symbolic-computation": {
+      "description": "Computer algebra system result.",
+      "source_types": ["calculation"]
+    },
+    "numerical-test": {
+      "description": "Finite numerical cases evaluated. Evidence for or against a general claim; never a proof of one.",
+      "source_types": ["calculation", "test"]
+    },
+    "counterexample-search": {
+      "description": "A bounded, recorded search for counterexamples. A found counterexample refutes; an empty search only bounds where none exists.",
+      "source_types": ["calculation", "test"]
+    },
+    "sat-smt": {
+      "description": "SAT or SMT solver result over a stated encoding.",
+      "source_types": ["calculation", "formal-proof"]
+    },
+    "formal-proof": {
+      "description": "Machine-checked proof (Lean, Coq, Isabelle or similar) that the checker accepted.",
+      "source_types": ["formal-proof"]
+    },
+    "formalization-review": {
+      "description": "Review confirming that a formal statement matches the original informal claim.",
+      "source_types": ["document", "formal-proof"]
+    },
+    "reviewed-proof": {
+      "description": "A written proof reviewed by someone other than its author.",
+      "source_types": ["document", "formal-proof"]
+    },
+    "primary-source": {
+      "description": "Original document, record, dataset, specification or author statement.",
+      "source_types": ["document"]
+    },
+    "secondary-source": {
+      "description": "A source that reports on primary sources.",
+      "source_types": ["document"]
+    },
+    "descriptive-statistics": {
+      "description": "Counts, means, distributions, correlations computed on identified data.",
+      "source_types": ["calculation"]
+    },
+    "statistical-test": {
+      "description": "A pre-specified statistical test with recorded assumptions, effect size and uncertainty.",
+      "source_types": ["calculation"]
+    },
+    "holdout-evaluation": {
+      "description": "Evaluation on data held out from fitting and selection.",
+      "source_types": ["calculation", "test"]
+    },
+    "leakage-check": {
+      "description": "Explicit check that no target information leaks into features or splits.",
+      "source_types": ["calculation", "test"]
+    },
+    "sensitivity-analysis": {
+      "description": "Result recomputed under varied assumptions, subsets or parameters.",
+      "source_types": ["calculation"]
+    },
+    "observational-data": {
+      "description": "Associations in data that was not produced by an intervention.",
+      "source_types": ["calculation", "document"]
+    },
+    "controlled-experiment": {
+      "description": "An intervention with a control condition (randomized or otherwise controlled).",
+      "source_types": ["runtime", "test", "calculation"]
+    },
+    "causal-design": {
+      "description": "A quasi-experimental design applied with stated identifying assumptions (difference-in-differences, instrumental variable, regression discontinuity, stratification on a measured confounder).",
+      "source_types": ["calculation"]
+    },
+    "independent-review": {
+      "description": "A critique by an agent or person who did not produce the work under review.",
+      "source_types": ["document"]
+    },
+    "user-report": {
+      "description": "Something the user said they observed. Recorded faithfully, but weak authority for almost every claim type.",
+      "source_types": ["user-observation"]
+    }
+  },
+  "claim_types": {
+    "code-compiles": {
+      "description": "The code compiles or builds.",
+      "any_of": [[{"authorities": ["compiler"], "min": 1}]]
+    },
+    "function-works": {
+      "description": "A function or unit behaves as specified in a test environment.",
+      "any_of": [[{"authorities": ["unit-test", "integration-test", "property-test", "packaged-artifact-test"], "min": 1}]]
+    },
+    "works-in-final-package": {
+      "description": "Behavior holds in the built or shipped artifact.",
+      "any_of": [[{"authorities": ["packaged-artifact-test"], "min": 1}]]
+    },
+    "static-reference": {
+      "description": "Something is referenced, declared or present in an artifact (says nothing about execution).",
+      "any_of": [[{"authorities": ["static-analysis", "byte-inspection"], "min": 1}]]
+    },
+    "code-executed": {
+      "description": "A code path actually executed.",
+      "any_of": [[{"authorities": ["runtime-trace"], "min": 1}]]
+    },
+    "behavior-observed": {
+      "description": "A behavior was observed in execution.",
+      "any_of": [[{"authorities": ["runtime-trace", "controlled-mutation", "packaged-artifact-test", "integration-test"], "min": 1}]]
+    },
+    "root-cause-identified": {
+      "description": "A specific cause produces the failure: changing it removes the failure and restoring it brings the failure back.",
+      "any_of": [[{"authorities": ["controlled-mutation", "controlled-experiment"], "min": 1}]]
+    },
+    "regression-absent": {
+      "description": "Existing behavior still passes after a change.",
+      "any_of": [[{"authorities": ["unit-test", "integration-test", "packaged-artifact-test"], "min": 1}]]
+    },
+    "performance-claim": {
+      "description": "A performance property holds.",
+      "any_of": [[{"authorities": ["benchmark"], "min": 1}]]
+    },
+    "parser-preserves-file": {
+      "description": "Reading and writing preserves the file.",
+      "any_of": [[{"authorities": ["round-trip-comparison"], "min": 1}]]
+    },
+    "field-semantics": {
+      "description": "A field in a format means a specific thing.",
+      "any_of": [
+        [
+          {"authorities": ["controlled-mutation"], "min": 1},
+          {"authorities": ["static-analysis", "runtime-trace", "round-trip-comparison", "byte-inspection"], "min": 1}
+        ]
+      ]
+    },
+    "format-reconstructed": {
+      "description": "A reconstruction reproduces the original behavior on the declared cases.",
+      "any_of": [
+        [
+          {"authorities": ["round-trip-comparison"], "min": 1},
+          {"authorities": ["packaged-artifact-test", "runtime-trace", "controlled-mutation"], "min": 1}
+        ]
+      ]
+    },
+    "calculation-correct": {
+      "description": "A computed value is correct.",
+      "any_of": [[{"authorities": ["independent-calculation", "symbolic-computation"], "min": 1}]]
+    },
+    "conjecture-refuted": {
+      "description": "A general claim is false because an explicit counterexample exists.",
+      "any_of": [
+        [
+          {"authorities": ["counterexample-search", "numerical-test"], "min": 1},
+          {"authorities": ["independent-calculation", "symbolic-computation"], "min": 1}
+        ]
+      ]
+    },
+    "theorem-valid": {
+      "description": "A general mathematical statement is true.",
+      "any_of": [
+        [{"authorities": ["reviewed-proof"], "min": 1}],
+        [
+          {"authorities": ["formal-proof"], "min": 1},
+          {"authorities": ["formalization-review"], "min": 1}
+        ]
+      ]
+    },
+    "historical-claim": {
+      "description": "A historical or documentary statement is true.",
+      "any_of": [
+        [{"authorities": ["primary-source"], "min": 1}],
+        [{"authorities": ["secondary-source"], "min": 2}]
+      ]
+    },
+    "source-states": {
+      "description": "A specific document states something (not that the statement is true).",
+      "any_of": [[{"authorities": ["primary-source", "secondary-source"], "min": 1}]]
+    },
+    "correlation-exists": {
+      "description": "Two variables are associated in the identified data.",
+      "any_of": [[{"authorities": ["descriptive-statistics", "statistical-test", "observational-data"], "min": 1}]]
+    },
+    "statistical-difference": {
+      "description": "A difference exceeds what the stated noise model explains.",
+      "any_of": [[{"authorities": ["statistical-test"], "min": 1}]]
+    },
+    "causal-effect": {
+      "description": "An intervention or variable causes an effect.",
+      "any_of": [
+        [{"authorities": ["controlled-experiment"], "min": 1}],
+        [
+          {"authorities": ["causal-design"], "min": 1},
+          {"authorities": ["sensitivity-analysis"], "min": 1}
+        ]
+      ]
+    },
+    "model-generalizes": {
+      "description": "A model's measured performance holds on unseen data.",
+      "any_of": [
+        [
+          {"authorities": ["holdout-evaluation"], "min": 1},
+          {"authorities": ["leakage-check"], "min": 1}
+        ]
+      ]
+    },
+    "data-schema-valid": {
+      "description": "Data conforms to a schema.",
+      "any_of": [[{"authorities": ["schema-validation"], "min": 1}]]
+    },
+    "user-reported": {
+      "description": "The user reported something (records the report, not its truth).",
+      "any_of": [[{"authorities": ["user-report"], "min": 1}]]
+    }
+  }
+}

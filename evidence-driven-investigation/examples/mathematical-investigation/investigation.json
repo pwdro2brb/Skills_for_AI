@@ -1,0 +1,768 @@
+{
+  "authority_extensions": {
+    "authorities": {},
+    "claim_types": {
+      "conjecture-decided": {
+        "any_of": [
+          [
+            {
+              "authorities": [
+                "counterexample-search",
+                "numerical-test"
+              ],
+              "min": 1
+            },
+            {
+              "authorities": [
+                "independent-calculation",
+                "symbolic-computation"
+              ],
+              "min": 1
+            }
+          ],
+          [
+            {
+              "authorities": [
+                "reviewed-proof"
+              ],
+              "min": 1
+            }
+          ],
+          [
+            {
+              "authorities": [
+                "formal-proof"
+              ],
+              "min": 1
+            },
+            {
+              "authorities": [
+                "formalization-review"
+              ],
+              "min": 1
+            }
+          ]
+        ],
+        "description": "A conjecture is either refuted by a verified counterexample or proven",
+        "rationale": "Union of the base claim types conjecture-refuted and theorem-valid; adds no weaker clause"
+      }
+    },
+    "rationale": "The objective is to decide the conjecture; either a refutation or a proof closes it"
+  },
+  "conclusion": {
+    "claimed_state": "COMPLETE_WITH_LIMITATIONS",
+    "summary": "Refuted. n*n + n + 41 is prime for n = 0..39 but n=40 gives 1681 = 41 * 41, found by a bounded search and confirmed by an independent algorithm. The 40 confirming cases were evidence for the pattern, never a proof. The state stops at COMPLETE_WITH_LIMITATIONS because no independent reviewer checked the work."
+  },
+  "contradictions": [],
+  "evidence": [
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "numerical-test",
+      "claim": "Trial division: checked n=0..39: 40 prime, 0 not prime []",
+      "collected_by": "single-agent",
+      "command_or_method": "python check_small.py 40",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0001",
+      "limitations": [
+        "finite cases; says nothing about n >= 40"
+      ],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p1-small-cases.txt",
+        "sha256": "87cc1e5be30f800aa32578596b802ff81e96bdce1156fab4fe634d94d431f2b9",
+        "shown_lines": 1,
+        "total_lines": 1
+      },
+      "record_digest": "30af5d172bcb74bf42c843d0b7b3060c5e7f64836c117a194005d792d4bcb6f9",
+      "reproducible": true,
+      "role": "observation",
+      "scope": "n = 0..39 only",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0001"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "counterexample-search",
+      "claim": "Searching n = 0..10000: first composite at n=40 (1681 has factor 41); 5852 of 10001 values are composite",
+      "collected_by": "single-agent",
+      "command_or_method": "python search_counterexample.py 10000",
+      "contradicts": [
+        "H-0001"
+      ],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0002",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p2-search.txt",
+        "sha256": "181684c2f8135fd22211c1d8ba67ea53980eaf3616e075d1333943c692b92f99",
+        "shown_lines": 4,
+        "total_lines": 4
+      },
+      "record_digest": "068cb849c7b2f6d1eb23b20b40bbc7beb398e6304ba855e3ec5df16c913d1634",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "n = 0..10000, trial division",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "independent-calculation",
+      "claim": "Independent route: 41*41 = 1681; equal: True; Miller-Rabin reports composite",
+      "collected_by": "single-agent",
+      "command_or_method": "python verify_counterexample.py 40",
+      "contradicts": [
+        "H-0001"
+      ],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0003",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p3-independent.txt",
+        "sha256": "3a25c06dd0cc86131988580b9b1b06a2d7284df6615bb82a4f381e94890ff011",
+        "shown_lines": 5,
+        "total_lines": 5
+      },
+      "record_digest": "d7ac4ede8a0fef1dfb78f926be2704688efaa9ad35552bdb7a9e72ae99043979",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "n = 40 only",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "file",
+        "value": "outputs/p3-independent.txt"
+      },
+      "authority": "independent-review",
+      "claim": "Self-review: the counterexample n=40 lies in the stated domain (integer, >= 0) and the tested expression is exactly n*n + n + 41",
+      "collected_by": "single-agent",
+      "command_or_method": "",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0004",
+      "limitations": [
+        "not independent: same agent as the producer"
+      ],
+      "record_digest": "c42b0857de7d2213b51627c54afeaa69bd7d2c1b6654fab692575c6efe67d0ad",
+      "reproducible": false,
+      "role": "review",
+      "scope": "statement/domain match only",
+      "source": "review by the same agent that ran the search",
+      "source_type": "document",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": ""
+    }
+  ],
+  "findings": [
+    {
+      "claim": "n*n + n + 41 is prime for n = 0..39 (checked n=0..39: 40 prime, 0 not prime [])",
+      "claim_type": null,
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "OBSERVED",
+      "evidence": [
+        "E-0001"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0001",
+      "rationale": "",
+      "record_digest": "06c275f3817182df71c5284f194cc330af2566a2c9a718d1efac2382f968b249",
+      "scope": "n = 0..39",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "claim": "The conjecture is false: n=40 gives 1681 = 41 * 41",
+      "claim_type": "conjecture-refuted",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [
+        "H-0002"
+      ],
+      "id": "F-0002",
+      "rationale": "",
+      "record_digest": "69467d98490e9d6ac64699bc2e439e42e5b69de27408d490e5b22e66209ad017",
+      "scope": "the statement as given",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0002",
+        "E-0003"
+      ]
+    },
+    {
+      "claim": "The 40 prime values for n = 0..39 show the formula always gives primes",
+      "claim_type": null,
+      "contradicting_evidence": [
+        "E-0002"
+      ],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "REJECTED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0003",
+      "rationale": "",
+      "record_digest": "62338624ff9cc66e6719a4237194389676dbeb805ec5d7fc9918b9d14aed9ba7",
+      "scope": "the inference from finite cases",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "hypotheses": [
+    {
+      "alternatives": [
+        "H-0002",
+        "H-0003"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0002",
+        "E-0003"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0002"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0003"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0001 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0002 added to contradicting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to contradicting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, predictions"
+        }
+      ],
+      "id": "H-0001",
+      "kind": "primary",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0002",
+            "E-0003"
+          ],
+          "id": "H-0001.P1",
+          "result": "refuted",
+          "statement": "If true, no counterexample exists for any n, in particular none up to 10000"
+        }
+      ],
+      "prior_basis": "the claim under investigation (Euler's polynomial)",
+      "record_digest": "9c0ed46871f83deb21e6cbfc42d0c1e68423f2d39bf40dc4bd17c71f526c72f5",
+      "statement": "n*n + n + 41 is prime for every integer n >= 0",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0001"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001",
+        "H-0004"
+      ],
+      "claim_type": "conjecture-refuted",
+      "confidence": {
+        "label": "high",
+        "rationale": "explicit factorization 41*41, checked twice"
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0004"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0002 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to supporting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "claim_type, status, confidence, verification_evidence, predictions"
+        }
+      ],
+      "id": "H-0002",
+      "kind": "alternative",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0002",
+            "E-0003"
+          ],
+          "id": "H-0002.P1",
+          "result": "confirmed",
+          "statement": "If true, a bounded search finds n with a nontrivial factor, confirmed by an independent check"
+        }
+      ],
+      "prior_basis": "most polynomial prime patterns break eventually; 41 is a suspicious constant",
+      "record_digest": "436c1130a866fbeeeeff7d4c2ffa1a0d613d572e8d07884ecc8e5f9d42929637",
+      "statement": "Some integer n >= 0 makes n*n + n + 41 composite",
+      "status": "VERIFIED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0002",
+        "E-0003"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0002",
+        "E-0003"
+      ]
+    },
+    {
+      "alternatives": [
+        "H-0001"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, supporting_evidence, predictions"
+        }
+      ],
+      "id": "H-0003",
+      "kind": "null",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0001"
+          ],
+          "id": "H-0003.P1",
+          "result": "confirmed",
+          "statement": "If true, any number of confirming small cases leaves the general claim undecided"
+        }
+      ],
+      "prior_basis": "finitely many cases never establish a statement about infinitely many",
+      "record_digest": "b44b6d4d3343cd1a2438a4d7d1c9a8ca4f0ba5b9d8ff37ac6fb245320d41b68d",
+      "statement": "The primes seen for small n carry no information about all n",
+      "status": "SUPPORTED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0001"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0002"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0003"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, contradicting_evidence, predictions"
+        }
+      ],
+      "id": "H-0004",
+      "kind": "measurement-error",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0002",
+            "E-0003"
+          ],
+          "id": "H-0004.P1",
+          "result": "refuted",
+          "statement": "If true, an independent algorithm disagrees about the reported counterexample"
+        }
+      ],
+      "prior_basis": "a single program could be wrong",
+      "record_digest": "937e41c1ea12b854238c58622511c0a8be87d9ce4e222390b87903641a74effb",
+      "statement": "A bug in the primality code produces a false counterexample",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "investigation": {
+    "completion_criteria": [
+      "the conjecture is either proven or refuted by a verified counterexample"
+    ],
+    "created_at": "2026-11-25T12:00:00Z",
+    "domains": [
+      "mathematics"
+    ],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-11-25T12:00:00Z",
+        "detail": "mode=rigorous"
+      },
+      {
+        "action": "authority_extension",
+        "at": "2026-11-25T12:00:00Z",
+        "detail": "The objective is to decide the conjecture; either a refutation or a proof closes it"
+      }
+    ],
+    "id": "euler-polynomial",
+    "mode": "rigorous",
+    "objective": "Decide, with adequate authority, whether n*n + n + 41 is prime for every integer n >= 0",
+    "scope_in": [
+      "integers n >= 0"
+    ],
+    "scope_out": [
+      "whether infinitely many n give primes (open problem)"
+    ],
+    "title": "Is n^2 + n + 41 prime for every n >= 0?"
+  },
+  "limitations": [
+    "Computations use Python integers on one machine; algorithms are elementary and shown in full",
+    "No independent human or agent reviewed this example"
+  ],
+  "obligations": [
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "statement as given (all integers n >= 0)": [
+          "E-0002",
+          "E-0003"
+        ]
+      },
+      "claim": "The conjecture is decided",
+      "construction_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0001",
+      "kind": "proof",
+      "owner": "ledger",
+      "record_digest": "44231ffa248ff054ad2d01f9ed1980b0dcfd74ea1454061fb83f82bc12ee92c3",
+      "required_authority": "conjecture-decided",
+      "required_cases": [
+        "statement as given (all integers n >= 0)"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0002",
+        "E-0003"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "abandon_reason": "",
+      "authorization": null,
+      "cost": "low",
+      "created_at": "2026-11-25T12:00:00Z",
+      "discriminates": [
+        "H-0001",
+        "H-0002"
+      ],
+      "expected_by_hypothesis": {
+        "H-0001": "no composite value for n = 0..10000",
+        "H-0002": "at least one composite value with an explicit factor"
+      },
+      "external": false,
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, outcome, result_evidence"
+        }
+      ],
+      "id": "P-0001",
+      "interpretation_criterion": "any composite value refutes H-0001 once an independent check confirms it",
+      "observation_authority": "counterexample-search",
+      "outcome": "composite at n=40: H-0001 refuted, pending the independent check",
+      "purpose": "counterexample-search",
+      "question": "Is there a counterexample with n <= 10000?",
+      "record_digest": "e4f5ef46bbc68d854e8137a3f4352cfdbeaa4f8e2e89b3f4efb51961d73588df",
+      "repeatable": true,
+      "requires_authorization": false,
+      "result_evidence": [
+        "E-0002"
+      ],
+      "reversibility": "reversible",
+      "risk": "low",
+      "sensitive": false,
+      "status": "DONE",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "variables_changed": [
+        "n over 0..10000"
+      ],
+      "variables_controlled": [
+        "same polynomial and trial-division code"
+      ]
+    },
+    {
+      "abandon_reason": "",
+      "authorization": null,
+      "cost": "low",
+      "created_at": "2026-11-25T12:00:00Z",
+      "discriminates": [
+        "H-0002",
+        "H-0004"
+      ],
+      "expected_by_hypothesis": {
+        "H-0002": "an independent algorithm also finds 1681 composite",
+        "H-0004": "an independent algorithm finds 1681 prime"
+      },
+      "external": false,
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, outcome, result_evidence"
+        }
+      ],
+      "id": "P-0002",
+      "interpretation_criterion": "agreement of both independent routes",
+      "observation_authority": "independent-calculation",
+      "outcome": "both routes agree: composite; H-0004 refuted",
+      "purpose": "verify",
+      "question": "Is n=40 really a counterexample?",
+      "record_digest": "65c5f514799831d6b5812fbd14fd03f96c850d769916f1fa8741eacfc8971b98",
+      "repeatable": true,
+      "requires_authorization": false,
+      "result_evidence": [
+        "E-0003"
+      ],
+      "reversibility": "reversible",
+      "risk": "low",
+      "sensitive": false,
+      "status": "DONE",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "variables_changed": [
+        "algorithm (exact factor arithmetic + Miller-Rabin instead of trial division)"
+      ],
+      "variables_controlled": [
+        "same n"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "unknowns": [
+    {
+      "blocked_reason": "",
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "domain": "number theory",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, resolution_rationale"
+        }
+      ],
+      "id": "U-0001",
+      "question": "Does n*n + n + 41 take prime values for infinitely many n?",
+      "recommended_probes": [],
+      "record_digest": "ad33daef8277248d00a440419a0c0576f479cac2b495c382017c566f36700142",
+      "required_authority": null,
+      "required_environment": "",
+      "requires_observation": false,
+      "resolution_evidence": [],
+      "resolution_rationale": "a different and open question (Bunyakovsky conjecture); not needed to decide the objective",
+      "severity": "low",
+      "status": "OUT_OF_SCOPE",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z"
+    }
+  ]
+}

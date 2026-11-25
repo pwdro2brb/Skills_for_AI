@@ -1,0 +1,834 @@
+{
+  "authority_extensions": {
+    "authorities": {},
+    "claim_types": {},
+    "rationale": ""
+  },
+  "conclusion": {
+    "claimed_state": "COMPLETE_WITH_LIMITATIONS",
+    "summary": "The association is real but explained by device: desktop users both prefer dark mode and have longer sessions. Within each device type the difference is near zero, and other summaries agree. Do not expect longer sessions from enabling dark mode by default. This is inferred from observational data; an A/B test would settle it, and the session metric's definition per platform (U-0001) is unverified."
+  },
+  "contradictions": [],
+  "evidence": [
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "user-report",
+      "claim": "Product team reports that dark-mode users have much longer sessions and asks whether to turn it on by default",
+      "collected_by": "single-agent",
+      "command_or_method": "",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0001",
+      "limitations": [],
+      "record_digest": "c000723b0717a8999e5b4529c54e5822b30e7993a9f7106d41bf68f2cb696684",
+      "reproducible": false,
+      "role": "observation",
+      "scope": "the request; no analysis attached",
+      "source": "user request",
+      "source_type": "user-observation",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": ""
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "sessions.csv",
+        "value": "7e98f4a7086552449f4e8c65b1f06634012043b0a29635ce872846657ed83362"
+      },
+      "authority": "schema-validation",
+      "claim": "2000 rows, 0 schema problems",
+      "collected_by": "single-agent",
+      "command_or_method": "python schema_check.py sessions.csv",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0002",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p0-schema.txt",
+        "sha256": "4da83409aaa7d1f918ee36146e7b6af26d337612f50009a6838e7ae6657cff94",
+        "shown_lines": 1,
+        "total_lines": 1
+      },
+      "record_digest": "e94a6c43a0bcd75a0df3dd3d3e67765cfa6a9605f838873968b2591e33b429ea",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "column names, allowed values, ranges, unique ids",
+      "source": "",
+      "source_type": "test",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "descriptive-statistics",
+      "claim": "All users: difference on-off: +9.45 min (95% CI +8.56 to +10.34); desktop: n=880 dark-mode share=72% mean session=30.99 min; mobile: n=1120 dark-mode share=21% mean session=12.14 min",
+      "collected_by": "single-agent",
+      "command_or_method": "python describe.py sessions.csv",
+      "contradicts": [
+        "H-0003"
+      ],
+      "derived_from": [
+        "E-0002"
+      ],
+      "epistemic_status": "DERIVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0003",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p1-describe.txt",
+        "sha256": "f2d4c4523dec220697e8d9496b7a371166256cf113dce81a78f5fa58175dd2fc",
+        "shown_lines": 5,
+        "total_lines": 5
+      },
+      "record_digest": "57505c71d5f979407bd82844542377299abf75b004726643d5b48980164c20ea",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "all 2000 users, unadjusted",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0001",
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "causal-design",
+      "claim": "Within device: desktop: n_on=630 n_off=250 difference -0.18 min (95% CI -1.02 to +0.67); mobile: n_on=238 n_off=882 difference -0.02 min (95% CI -0.85 to +0.81); device-standardized difference: -0.09 min",
+      "collected_by": "single-agent",
+      "command_or_method": "python stratify.py sessions.csv",
+      "contradicts": [
+        "H-0001"
+      ],
+      "derived_from": [
+        "E-0002"
+      ],
+      "epistemic_status": "DERIVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0004",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p1-stratify.txt",
+        "sha256": "0726ce6379fed2f903bd129072de9600969dd1e0eddb8a0396030924696ec8c4",
+        "shown_lines": 3,
+        "total_lines": 3
+      },
+      "record_digest": "4ed431d1eac739ddd31627505013436f424cb4baf7a3ce903135be8a491e5b71",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "adjusts for device only; unmeasured confounders remain",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "sensitivity-analysis",
+      "claim": "Other summaries agree: desktop: median difference -0.70 min; 5%-trimmed mean difference -0.16 min; mobile: median difference +0.20 min; 5%-trimmed mean difference -0.01 min",
+      "collected_by": "single-agent",
+      "command_or_method": "python sensitivity.py sessions.csv",
+      "contradicts": [],
+      "derived_from": [
+        "E-0002"
+      ],
+      "epistemic_status": "DERIVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0005",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p2-sensitivity.txt",
+        "sha256": "a6bd7068f2cf773d6168ca2d7ca69d977dace2b073570b7c1cff2fc71413d784",
+        "shown_lines": 2,
+        "total_lines": 2
+      },
+      "record_digest": "0e52f4b5774688d1b69882b33b28e4ff2a6b152b74ddc0347950f8f4eb4effcc",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "median and trimmed means within device",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    }
+  ],
+  "findings": [
+    {
+      "claim": "Dark-mode users have longer sessions overall",
+      "claim_type": "correlation-exists",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0001",
+      "rationale": "",
+      "record_digest": "24e77dfe5b18d18e6ada8297836604172d6d90ae649db4b8a5679322e76c2c18",
+      "scope": "all 2000 users, unadjusted",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003"
+      ]
+    },
+    {
+      "claim": "Within each device type the difference is near zero (both 95% intervals include zero)",
+      "claim_type": null,
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "DERIVED",
+      "evidence": [
+        "E-0004",
+        "E-0005"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0002",
+      "rationale": "",
+      "record_digest": "40940a876f5e670fed31c9b60b2a5a2f23fcd0d2e22293229b609d651b0f7af8",
+      "scope": "adjusted for device only",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "claim": "Turning dark mode on by default would not lengthen sessions",
+      "claim_type": null,
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "INFERRED",
+      "evidence": [
+        "E-0004",
+        "E-0005"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [
+        "H-0002"
+      ],
+      "id": "F-0003",
+      "rationale": "",
+      "record_digest": "022bddbfae22a17a2b263e1e859332e03e636b00e24102130fafe66b31487715",
+      "scope": "a causal prediction from observational data; not tested by intervention",
+      "unknowns": [
+        "U-0001",
+        "U-0002"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "hypotheses": [
+    {
+      "alternatives": [
+        "H-0002",
+        "H-0003",
+        "H-0004"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [
+        "device type (desktop sessions are longer and desktop users may prefer dark mode)"
+      ],
+      "contradicting_evidence": [
+        "E-0004"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0002"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0003"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0004"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0004 added to contradicting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, status_rationale, predictions"
+        }
+      ],
+      "id": "H-0001",
+      "kind": "primary",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0004"
+          ],
+          "id": "H-0001.P1",
+          "result": "refuted",
+          "statement": "If true, dark-mode users have longer sessions overall AND within each device type"
+        }
+      ],
+      "prior_basis": "the product team's observation (E-0001)",
+      "record_digest": "d3f360784fc17f4be34c9c2eddced52436fb94b141f3c4c5178863a33a05f998",
+      "statement": "Dark mode causes longer sessions",
+      "status": "CONTRADICTED",
+      "status_rationale": "not REJECTED: measurement differences (H-0004) are untested",
+      "supporting_evidence": [
+        "E-0003"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "moderate",
+        "rationale": "matches the pre-registered pattern and survives the sensitivity check; unmeasured confounders remain"
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0004 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0005 added to supporting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, confidence, predictions"
+        }
+      ],
+      "id": "H-0002",
+      "kind": "alternative",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0004"
+          ],
+          "id": "H-0002.P1",
+          "result": "confirmed",
+          "statement": "If true, the overall difference shrinks to about zero within each device type"
+        }
+      ],
+      "prior_basis": "desktop and mobile differ in both habits",
+      "record_digest": "2dbc8115bd104e8e1050cfdfe68c9f0636ae646d34444686b1bf51a76a0e17b3",
+      "statement": "Device type drives both dark-mode use and session length; dark mode itself has no effect",
+      "status": "SUPPORTED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0003",
+        "E-0004",
+        "E-0005"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0003"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to contradicting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, predictions"
+        }
+      ],
+      "id": "H-0003",
+      "kind": "null",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0003"
+          ],
+          "id": "H-0003.P1",
+          "result": "refuted",
+          "statement": "If true, the overall 95% interval includes zero"
+        }
+      ],
+      "prior_basis": "conservative default",
+      "record_digest": "1b35825e901d86314dc523c4e1e097737b2f9b09aec4c7f8ebba6b40ab7f7bb7",
+      "statement": "There is no association between dark mode and session length",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "next_probe, status"
+        }
+      ],
+      "id": "H-0004",
+      "kind": "measurement-error",
+      "next_probe": "U-0001",
+      "predictions": [
+        {
+          "evidence": [],
+          "id": "H-0004.P1",
+          "result": "pending",
+          "statement": "If true, the instrumentation documentation or client code shows different session definitions"
+        }
+      ],
+      "prior_basis": "mobile apps often stop timers when backgrounded",
+      "record_digest": "f7c76285778e9fab6f91656cab46eab10459af58075c13f62b35f90ebcb90f0d",
+      "statement": "Session length is measured differently on desktop and mobile clients",
+      "status": "TESTING",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "investigation": {
+    "completion_criteria": [
+      "the association is quantified with uncertainty",
+      "the causal reading is tested against measured confounders, with a sensitivity check"
+    ],
+    "created_at": "2026-11-25T12:00:00Z",
+    "domains": [
+      "data-analysis"
+    ],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-11-25T12:00:00Z",
+        "detail": "mode=investigative"
+      }
+    ],
+    "id": "dark-mode-sessions",
+    "mode": "investigative",
+    "objective": "Determine whether enabling dark mode causes longer sessions, using sessions.csv",
+    "scope_in": [
+      "sessions.csv (2000 users, one snapshot)"
+    ],
+    "scope_out": [
+      "running a randomized experiment"
+    ],
+    "title": "Does dark mode make sessions longer?"
+  },
+  "limitations": [
+    "Observational snapshot: only measured confounders can be adjusted for",
+    "Synthetic data; conclusions illustrate the method, not real users"
+  ],
+  "obligations": [
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "columns and types": [
+          "E-0002"
+        ]
+      },
+      "claim": "sessions.csv matches the expected schema",
+      "construction_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0001",
+      "kind": "analysis",
+      "owner": "sessions.csv",
+      "record_digest": "c27c61573e8d56a7db232b7321e718f5789425af01b92131a7e55c657c0d7b37",
+      "required_authority": "data-schema-valid",
+      "required_cases": [
+        "columns and types"
+      ],
+      "severity": "major",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0002"
+      ]
+    },
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "all users": [
+          "E-0003"
+        ]
+      },
+      "claim": "The association between dark mode and session length is quantified with a 95% interval",
+      "construction_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [
+        "O-0001"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0002",
+      "kind": "analysis",
+      "owner": "",
+      "record_digest": "da6bb48278907aaa6ef606d76d4d25f06bc68522d7108f984a0ac98158ff7875",
+      "required_authority": "correlation-exists",
+      "required_cases": [
+        "all users"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003"
+      ]
+    },
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "desktop": [
+          "E-0004",
+          "E-0005"
+        ],
+        "mobile": [
+          "E-0004",
+          "E-0005"
+        ]
+      },
+      "claim": "The causal reading is tested against the device confounder with a causal design and a sensitivity analysis",
+      "construction_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [
+        "O-0002"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0003",
+      "kind": "analysis",
+      "owner": "",
+      "record_digest": "23439199ad4f43eb3399ba189698ac4f23f355cbc3e62ba29af75a0fc0d16fe2",
+      "required_authority": "causal-effect",
+      "required_cases": [
+        "desktop",
+        "mobile"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0004",
+        "E-0005"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "abandon_reason": "",
+      "authorization": null,
+      "cost": "low",
+      "created_at": "2026-11-25T12:00:00Z",
+      "discriminates": [
+        "H-0001",
+        "H-0002",
+        "H-0003"
+      ],
+      "expected_by_hypothesis": {
+        "H-0001": "positive overall difference that remains positive within both devices",
+        "H-0002": "positive overall difference that is near zero within both devices",
+        "H-0003": "overall interval includes zero"
+      },
+      "external": false,
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, outcome, result_evidence"
+        }
+      ],
+      "id": "P-0001",
+      "interpretation_criterion": "decided before running: an effect 'remains' if both within-device intervals exclude zero in the same direction; 'near zero' if both include zero. Only these two analyses plus the sensitivity check are run.",
+      "observation_authority": "causal-design",
+      "outcome": "overall difference positive with an interval excluding zero; both within-device intervals include zero: matches H-0002, contradicts H-0001 and H-0003",
+      "purpose": "discriminate",
+      "question": "Is there an association, and does it survive stratification by device?",
+      "record_digest": "70666630754ee95ef1e805d1080b4a146595ca0839579cbaa9676fb02da4a334",
+      "repeatable": true,
+      "requires_authorization": false,
+      "result_evidence": [
+        "E-0003",
+        "E-0004",
+        "E-0005"
+      ],
+      "reversibility": "reversible",
+      "risk": "low",
+      "sensitive": false,
+      "status": "DONE",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "variables_changed": [
+        "stratification on device"
+      ],
+      "variables_controlled": [
+        "same data, same estimator (difference of means, Welch 95% CI)"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "unknowns": [
+    {
+      "blocked_reason": "",
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "domain": "instrumentation",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "U-0001",
+      "question": "Is session_minutes defined the same way on desktop and mobile clients?",
+      "recommended_probes": [
+        "read the analytics instrumentation spec or client code for both platforms"
+      ],
+      "record_digest": "b65407376ace22905989046278d354302263589fdadaf674a4eecde2e06c6885",
+      "required_authority": "primary-source",
+      "required_environment": "",
+      "requires_observation": true,
+      "resolution_evidence": [],
+      "resolution_rationale": "",
+      "severity": "high",
+      "status": "OPEN",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z"
+    },
+    {
+      "blocked_reason": "",
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "domain": "study design",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "U-0002",
+      "question": "Could an unmeasured variable (age, plan type, usage purpose) confound the within-device comparison?",
+      "recommended_probes": [
+        "an A/B test that assigns dark mode at random"
+      ],
+      "record_digest": "b93161cd426b23f42e0f5425d0fe225645030ccd7c636969bc78177c6ce8adf7",
+      "required_authority": "controlled-experiment",
+      "required_environment": "",
+      "requires_observation": false,
+      "resolution_evidence": [],
+      "resolution_rationale": "",
+      "severity": "medium",
+      "status": "OPEN",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z"
+    }
+  ]
+}

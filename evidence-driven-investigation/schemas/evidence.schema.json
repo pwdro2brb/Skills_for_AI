@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence.schema.json",
+  "title": "Evidence record",
+  "description": "One observation or deterministic derivation. Evidence is only OBSERVED or DERIVED; inferences are findings or hypotheses, never evidence. Conditional rules (required fields per source_type, authority compatibility, hashes) are enforced by scripts/validate_ledger.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "claim",
+    "epistemic_status",
+    "source_type",
+    "authority",
+    "source",
+    "artifact_identity",
+    "tool",
+    "command_or_method",
+    "timestamp",
+    "scope",
+    "limitations",
+    "supports",
+    "contradicts",
+    "reproducible",
+    "derived_from",
+    "role",
+    "collected_by",
+    "status",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^E-[0-9]{4,}$"
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Bounded description of what was observed or computed. Not an interpretation."
+    },
+    "epistemic_status": {
+      "enum": [
+        "OBSERVED",
+        "DERIVED"
+      ]
+    },
+    "source_type": {
+      "enum": [
+        "runtime",
+        "static",
+        "document",
+        "test",
+        "calculation",
+        "formal-proof",
+        "user-observation"
+      ]
+    },
+    "authority": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Authority tag from references/authority-matrix.json or ledger.authority_extensions."
+    },
+    "source": {
+      "type": "string",
+      "description": "Exact origin: file path, URL, citation, person."
+    },
+    "artifact_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "sha256",
+            "commit",
+            "version",
+            "url",
+            "file",
+            "none"
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
+    },
+    "tool": {
+      "type": "string"
+    },
+    "command_or_method": {
+      "type": "string",
+      "description": "Command or procedure that reproduces the observation."
+    },
+    "environment": {
+      "type": "string",
+      "description": "Platform, versions, configuration relevant to the observation."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What this evidence actually supports, and implicitly what it does not."
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "supports": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[EHPUCOF]-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "contradicts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[EHPUCOF]-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "reproducible": {
+      "type": "boolean"
+    },
+    "derived_from": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "role": {
+      "enum": [
+        "observation",
+        "construction",
+        "verification",
+        "review"
+      ]
+    },
+    "collected_by": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Agent or person that produced this record (e.g. single-agent, implementer, verifier, critic, user)."
+    },
+    "output_capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "total_lines",
+        "shown_lines",
+        "method"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "total_lines": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "shown_lines": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "method": {
+          "enum": [
+            "full",
+            "head",
+            "tail",
+            "grep",
+            "summary"
+          ]
+        },
+        "excerpt": {
+          "type": "string"
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "INVALIDATED"
+      ]
+    },
+    "invalidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "at",
+        "reason"
+      ],
+      "properties": {
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

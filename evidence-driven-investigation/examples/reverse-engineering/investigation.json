@@ -1,0 +1,1116 @@
+{
+  "authority_extensions": {
+    "authorities": {},
+    "claim_types": {},
+    "rationale": ""
+  },
+  "conclusion": {
+    "claimed_state": "COMPLETE_VERIFIED",
+    "summary": "Byte 8 is not the speed. It is a checksum (sum of bytes 9..27 mod 256) that changes whenever the speed byte (10) changes. Changing byte 8 alone makes the engine reject the save; a codec that recomputes it produces edits the engine loads. Bytes 5 and 9 remain unknown and are preserved verbatim."
+  },
+  "contradictions": [
+    {
+      "claim_a": "Byte 8 is the speed (user)",
+      "claim_b": "Changing byte 8 alone makes the engine reject the file",
+      "created_at": "2026-11-25T12:00:00Z",
+      "evidence_a": [
+        "E-0001"
+      ],
+      "evidence_b": [
+        "E-0003"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, resolution, resolution_evidence, possible_explanations"
+        }
+      ],
+      "id": "C-0001",
+      "possible_explanations": [
+        {
+          "category": "version",
+          "evidence": [],
+          "explanation": "The two sides describe different versions of the artifact, document or dataset.",
+          "status": "untested"
+        },
+        {
+          "category": "environment",
+          "evidence": [],
+          "explanation": "The observations were made in different environments or configurations.",
+          "status": "untested"
+        },
+        {
+          "category": "tool-error",
+          "evidence": [
+            "E-0002"
+          ],
+          "explanation": "A tool produced a wrong or partial result.",
+          "status": "ruled-out"
+        },
+        {
+          "category": "interpretation",
+          "evidence": [
+            "E-0004"
+          ],
+          "explanation": "The same observation was interpreted differently.",
+          "status": "supported"
+        },
+        {
+          "category": "nondeterminism",
+          "evidence": [],
+          "explanation": "The behavior is nondeterministic (timing, ordering, randomness).",
+          "status": "untested"
+        },
+        {
+          "category": "sample-size",
+          "evidence": [],
+          "explanation": "One side rests on too few cases.",
+          "status": "untested"
+        },
+        {
+          "category": "more-complex-hypothesis",
+          "evidence": [],
+          "explanation": "Both are partly right; a more complex explanation covers both.",
+          "status": "untested"
+        },
+        {
+          "category": "tampered-data",
+          "evidence": [],
+          "explanation": "One of the inputs was altered or corrupted.",
+          "status": "untested"
+        },
+        {
+          "category": "ambiguous-definition",
+          "evidence": [],
+          "explanation": "The sides use a term or measurement differently.",
+          "status": "untested"
+        },
+        {
+          "category": "authority-mismatch",
+          "evidence": [],
+          "explanation": "One side has weaker authority than the claim it is used for.",
+          "status": "untested"
+        }
+      ],
+      "record_digest": "ead96942587f7886cb71f50dbbdfd5783ff6ea27845f608b64cd4b602e005fa5",
+      "resolution": "Both observations are right; the interpretation was not. Byte 8 co-varies with speed because it is a checksum over bytes 9..27, which include the speed byte (E-0004)",
+      "resolution_evidence": [
+        "E-0004"
+      ],
+      "severity": "medium",
+      "status": "RESOLVED",
+      "updated_at": "2026-11-25T12:00:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "user-report",
+      "claim": "User reports: byte 8 changes every time the speed is changed in-game, so it is probably the speed",
+      "collected_by": "single-agent",
+      "command_or_method": "",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0001",
+      "limitations": [],
+      "record_digest": "a0526f8418b5e488f42cde10156a78d1c666534d1ab00b2021e3c3e80263325e",
+      "reproducible": false,
+      "role": "observation",
+      "scope": "the user's observation and interpretation; no files attached",
+      "source": "user message",
+      "source_type": "user-observation",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": ""
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "work/s2.sav",
+        "value": "cb4ae1cca992a6d2a4a291a566389c0f4baa9b4a3ab2cd6722a0baabbbab14ef"
+      },
+      "authority": "byte-inspection",
+      "claim": "s1 (speed 100) vs s2 (same save after in-game speed change to 120): only offsets 6, 8 and 10 differ (6: 1->2, 8: 46->66, 10: 100->120); magic TSAV aligned in both",
+      "collected_by": "single-agent",
+      "command_or_method": "python hexdiff.py work/s1.sav work/s2.sav",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0002",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p1-hexdiff.txt",
+        "sha256": "a154bf8b0308124079f4a5924c8487e7bd04147fe743604de451ab55b67fb699",
+        "shown_lines": 5,
+        "total_lines": 5
+      },
+      "record_digest": "452dcf2c36af80ac7166387224a83c0d5f5b0f81c08c48d64777de3933b00800",
+      "reproducible": true,
+      "role": "observation",
+      "scope": "one pair of saves differing by one in-game edit",
+      "source": "",
+      "source_type": "static",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "hexdiff.py"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "work/m8.sav",
+        "value": "cb6250d0a39cef12810c604a5afe2e119a825abaf9ce4e53ca47d1cf0d455a2e"
+      },
+      "authority": "controlled-mutation",
+      "claim": "With only byte 8 changed (46 -> 71), the engine rejects the save and loads defaults",
+      "collected_by": "single-agent",
+      "command_or_method": "python mutate.py work/s1.sav work/m8.sav 8 71 && python toy_engine.py load work/m8.sav",
+      "contradicts": [
+        "H-0001",
+        "H-0003"
+      ],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0003",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p2-load.txt",
+        "sha256": "856e1bb6c5a31c40c95bf0efbf128267b4859673b98d0767b6a2a5a4000275b1",
+        "shown_lines": 1,
+        "total_lines": 1
+      },
+      "record_digest": "9ff89d381f38c768f5165be04686b196a66be638a3795e391e1746cca1ee1d07",
+      "reproducible": true,
+      "role": "observation",
+      "scope": "one mutated copy of s1",
+      "source": "",
+      "source_type": "runtime",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "toy_engine.py"
+    },
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "independent-calculation",
+      "claim": "In all four samples byte 8 equals sum(bytes 9..27) mod 256",
+      "collected_by": "single-agent",
+      "command_or_method": "python checksum_check.py work/s1.sav work/s2.sav work/s3.sav work/s4.sav",
+      "contradicts": [],
+      "derived_from": [
+        "E-0002"
+      ],
+      "epistemic_status": "DERIVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0004",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p3-checksum.txt",
+        "sha256": "c521c9c6cae897303fa11d578c8e2dd7a97c93503fba7883ce3696e6e2b3f82a",
+        "shown_lines": 4,
+        "total_lines": 4
+      },
+      "record_digest": "218ec9763992868e5c3a45bef8db655a2745ba7e91ebf31ce0c552b1f494ccf9",
+      "reproducible": true,
+      "role": "observation",
+      "scope": "four samples from one engine version",
+      "source": "",
+      "source_type": "calculation",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "checksum_check.py"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "save_codec.py",
+        "value": "525167484f3eb732c67e9fce6ea7897e2cffe8262a2f9254cc8b5e16cbd95d23"
+      },
+      "authority": "static-analysis",
+      "claim": "save_codec.py written: layout from E-0002, checksum rule from E-0004, bytes 5 and 9 copied verbatim",
+      "collected_by": "single-agent",
+      "command_or_method": "python -c \"import save_codec; [print(k, v) for k, v in save_codec.LAYOUT.items()]\"",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0005",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/construction-layout.txt",
+        "sha256": "13b38602691d1a94d5e46a680afbfd556ee6153c0c3fc2b997fe62ca274e3a39",
+        "shown_lines": 9,
+        "total_lines": 9
+      },
+      "record_digest": "910ede1610a030c88bede59313878d513648fc249b480cb905bfae22125fdadf",
+      "reproducible": true,
+      "role": "construction",
+      "scope": "the codec's declared layout; says nothing about whether it works",
+      "source": "",
+      "source_type": "static",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "work/edited.sav",
+        "value": "7389f46f31c983487aa618fe54a193bfd7cc7d8600814a770852d9fc90a2e4df"
+      },
+      "authority": "runtime-trace",
+      "claim": "A save edited by save_codec.py (speed 200, checksum recomputed per H-0002) loads with speed=200",
+      "collected_by": "single-agent",
+      "command_or_method": "python save_codec.py set-speed work/s1.sav 200 work/edited.sav && python toy_engine.py load work/edited.sav",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0006",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p4-load.txt",
+        "sha256": "aed8fa01ca5a65724a769976cf8681a168e1d40ec02e76a19886ec04401e5010",
+        "shown_lines": 1,
+        "total_lines": 1
+      },
+      "record_digest": "5c39039dae7889c6bcba60267a48d6d70aa69b04060fda1954ad89c7d3b0ac63",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "one edited save, one engine version",
+      "source": "",
+      "source_type": "runtime",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "toy_engine.py"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "save_codec.py",
+        "value": "525167484f3eb732c67e9fce6ea7897e2cffe8262a2f9254cc8b5e16cbd95d23"
+      },
+      "authority": "round-trip-comparison",
+      "claim": "parse+write is byte-identical for s1, s2, s3 (empty name) and s4 (16-character name)",
+      "collected_by": "single-agent",
+      "command_or_method": "python save_codec.py roundtrip work/s1.sav work/s2.sav work/s3.sav work/s4.sav",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0007",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/verification-roundtrip.txt",
+        "sha256": "5803412decf035894f50a646a7423da7dd2b5f277aa2c0766c7b601d25269587",
+        "shown_lines": 4,
+        "total_lines": 4
+      },
+      "record_digest": "d8e394ab29268b8da2af4ba1b161e07bdb4f5b65bf4183212159e02da1e9b3b3",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "four samples; unknown bytes copied verbatim",
+      "source": "",
+      "source_type": "test",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "save_codec.py"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "work/s4.sav",
+        "value": "532ecc47a8a06bbe8719c4e52d7915db10db290f56a4e939436ab8a1ddf3a8fc"
+      },
+      "authority": "byte-inspection",
+      "claim": "Byte 5 is 2 and byte 9 is 90 (0x5A) in all four samples",
+      "collected_by": "single-agent",
+      "command_or_method": "python -c \"import glob; ...print byte 5 and byte 9 of work/s*.sav\"",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0008",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p5-constant-bytes.txt",
+        "sha256": "482b93cad0f5b6bedc9eb0bb69e9134dc77d46d13a5f1e3971f4ae111bf27740",
+        "shown_lines": 4,
+        "total_lines": 4
+      },
+      "record_digest": "936a2183d73e3dc04759ab2a726d573a8584a9eddfabafcbbb97cc74bf8d7db7",
+      "reproducible": true,
+      "role": "observation",
+      "scope": "four samples; constant values say nothing about meaning",
+      "source": "",
+      "source_type": "static",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    }
+  ],
+  "findings": [
+    {
+      "claim": "Byte 8 is a checksum: sum of bytes 9..27 modulo 256",
+      "claim_type": "field-semantics",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [
+        "E-0004"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [
+        "H-0002"
+      ],
+      "id": "F-0001",
+      "rationale": "",
+      "record_digest": "7ff692eb3c76548180e8e89d28ea0724d6f868a96c487f68864efa5271d6f8c6",
+      "scope": "TSAV version 1 saves from this engine",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003",
+        "E-0002"
+      ]
+    },
+    {
+      "claim": "Byte 8 is the speed",
+      "claim_type": null,
+      "contradicting_evidence": [
+        "E-0003"
+      ],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "REJECTED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [
+        "H-0001"
+      ],
+      "id": "F-0002",
+      "rationale": "",
+      "record_digest": "500deb07c2f2be26f2c975e4b2475a0849e53272424c706a4b0aa4605de75958",
+      "scope": "TSAV version 1",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "claim": "save_codec.py round-trips saves and produces edits the engine accepts",
+      "claim_type": "format-reconstructed",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0003",
+      "rationale": "",
+      "record_digest": "84576fda5615bf7b5dc7ef2d07904e098a05d8918b51d2028f885c60caf82f1e",
+      "scope": "four samples and one edit",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0007",
+        "E-0006"
+      ]
+    },
+    {
+      "claim": "Meaning of bytes 5 and 9",
+      "claim_type": null,
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "UNKNOWN",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0004",
+      "rationale": "",
+      "record_digest": "0afb5e9010044605f2cb5d40c076f93924f29e8097078c3b6d3ff21e5124708f",
+      "scope": "preserved verbatim by the codec",
+      "unknowns": [
+        "U-0001"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "hypotheses": [
+    {
+      "alternatives": [
+        "H-0002",
+        "H-0003",
+        "H-0004"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0003"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0002"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0003"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0004"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to contradicting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, predictions"
+        }
+      ],
+      "id": "H-0001",
+      "kind": "primary",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0003"
+          ],
+          "id": "H-0001.P1",
+          "result": "refuted",
+          "statement": "If true, changing only byte 8 changes the loaded speed"
+        }
+      ],
+      "prior_basis": "user report (E-0001); byte 8 changes with speed (E-0002)",
+      "record_digest": "286696ba83902c1dace6a89af8ec815930ae8c2ff4bb200b6addba256eee7b12",
+      "statement": "Byte 8 encodes the vehicle speed",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001",
+        "H-0003"
+      ],
+      "claim_type": "field-semantics",
+      "confidence": {
+        "label": "high",
+        "rationale": "mutation of byte 8 alone is rejected; the formula holds in 4/4 samples; a recomputed edit loads"
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0003"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0004 added to supporting_evidence"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0006 added to supporting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "claim_type, status, confidence, verification_evidence, predictions"
+        }
+      ],
+      "id": "H-0002",
+      "kind": "alternative",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0003"
+          ],
+          "id": "H-0002.P1",
+          "result": "confirmed",
+          "statement": "If true, changing only byte 8 makes the engine reject the save"
+        },
+        {
+          "evidence": [
+            "E-0004"
+          ],
+          "id": "H-0002.P2",
+          "result": "confirmed",
+          "statement": "If true, byte 8 equals a simple function of bytes 9..27 in every sample"
+        }
+      ],
+      "prior_basis": "byte 8 changed by +20 when byte 10 changed by +20 (E-0002)",
+      "record_digest": "268616fc0286baa11f3dd2bd9549fc0879cc4cb14f48d7a1625b7da1f6e19a76",
+      "statement": "Byte 8 is a checksum over the bytes after it",
+      "status": "VERIFIED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0003",
+        "E-0004",
+        "E-0006"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003",
+        "E-0002"
+      ]
+    },
+    {
+      "alternatives": [
+        "H-0001",
+        "H-0002"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0003"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to contradicting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, predictions"
+        }
+      ],
+      "id": "H-0003",
+      "kind": "alternative",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0003"
+          ],
+          "id": "H-0003.P1",
+          "result": "refuted",
+          "statement": "If true, changing only byte 8 loads normally with the same speed"
+        }
+      ],
+      "prior_basis": "offset 6 also changed by one save (E-0002)",
+      "record_digest": "d284faf75de7ea2d9b53cd0099cfe176959e44cbb2a7290eadce402f6b17f2f0",
+      "statement": "Byte 8 is part of a save counter",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0002"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, contradicting_evidence, predictions"
+        }
+      ],
+      "id": "H-0004",
+      "kind": "measurement-error",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0002"
+          ],
+          "id": "H-0004.P1",
+          "result": "refuted",
+          "statement": "If true, the magic bytes would not line up at offset 0 in both files"
+        }
+      ],
+      "prior_basis": "off-by-one is common in hex work",
+      "record_digest": "f3d4caa3ed44d718912a7f359420f76a8af149b6cf4e4f5fbb5dc0e15cd9924d",
+      "statement": "The diff is misaligned and the changing byte is not really at offset 8",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "investigation": {
+    "completion_criteria": [],
+    "created_at": "2026-11-25T12:00:00Z",
+    "domains": [
+      "reverse-engineering"
+    ],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-11-25T12:00:00Z",
+        "detail": "mode=investigative"
+      }
+    ],
+    "id": "tsav-byte-8",
+    "mode": "investigative",
+    "objective": "Establish what byte 8 of the toy engine's save files means, then write a codec that round-trips saves and can edit speed without the engine rejecting the file",
+    "scope_in": [
+      "TSAV saves produced by toy_engine.py in this folder"
+    ],
+    "scope_out": [
+      "reading the engine's source (treated as a black box)"
+    ],
+    "title": "What is byte 8 of the TSAV save file?"
+  },
+  "limitations": [
+    "Synthetic format with one engine version; samples cover four saves",
+    "Behavior observed only through the engine's load output"
+  ],
+  "obligations": [
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "byte 8": [
+          "E-0003",
+          "E-0004"
+        ]
+      },
+      "claim": "The meaning of byte 8 is established",
+      "construction_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0001",
+      "kind": "analysis",
+      "owner": "ledger",
+      "record_digest": "04a6c03a9b697dd5317be9094910b5a6dac68498537ae953d7f92f7906675907",
+      "required_authority": "field-semantics",
+      "required_cases": [
+        "byte 8"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003",
+        "E-0002"
+      ]
+    },
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "16-character name": [
+          "E-0007"
+        ],
+        "after in-game edit": [
+          "E-0007"
+        ],
+        "empty name": [
+          "E-0007"
+        ],
+        "normal": [
+          "E-0007"
+        ]
+      },
+      "claim": "save_codec.py preserves every save byte for byte, unknown bytes included",
+      "construction_evidence": [
+        "E-0005"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, construction_evidence, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0002",
+      "kind": "reconstruction",
+      "owner": "save_codec.py",
+      "record_digest": "fc83cffc50d3bb640009126d89f87aae7c7c5ee2f30e71bdb8d5d45fbf43679d",
+      "required_authority": "parser-preserves-file",
+      "required_cases": [
+        "normal",
+        "after in-game edit",
+        "empty name",
+        "16-character name"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0007"
+      ]
+    },
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "speed edited": [
+          "E-0006"
+        ]
+      },
+      "claim": "Saves edited by save_codec.py load in the engine with the new speed",
+      "construction_evidence": [
+        "E-0005"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [
+        "O-0001",
+        "O-0002"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, construction_evidence, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0003",
+      "kind": "reconstruction",
+      "owner": "save_codec.py",
+      "record_digest": "b2b958ab898d16152a9bcdebf4c054d4a9fcaee81498c2f3d50f6ba683d792d6",
+      "required_authority": "format-reconstructed",
+      "required_cases": [
+        "speed edited"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0007",
+        "E-0006"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "abandon_reason": "",
+      "authorization": null,
+      "cost": "low",
+      "created_at": "2026-11-25T12:00:00Z",
+      "discriminates": [
+        "H-0001",
+        "H-0002",
+        "H-0003"
+      ],
+      "expected_by_hypothesis": {
+        "H-0001": "engine loads a different speed",
+        "H-0002": "engine rejects the save",
+        "H-0003": "engine loads speed 100 unchanged"
+      },
+      "external": false,
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, outcome, result_evidence"
+        }
+      ],
+      "id": "P-0001",
+      "interpretation_criterion": "the engine's load line decides; any other change to the file invalidates the probe",
+      "observation_authority": "controlled-mutation",
+      "outcome": "rejected: only H-0002 predicted this",
+      "purpose": "discriminate",
+      "question": "What happens when only byte 8 changes?",
+      "record_digest": "e012adce251925639dfb6f24145bf56697042e0ab02f7b1f1ed0b6e63d5141bb",
+      "repeatable": true,
+      "requires_authorization": false,
+      "result_evidence": [
+        "E-0003"
+      ],
+      "reversibility": "reversible",
+      "risk": "low",
+      "sensitive": false,
+      "status": "DONE",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "variables_changed": [
+        "byte 8 only"
+      ],
+      "variables_controlled": [
+        "all other 27 bytes identical to s1"
+      ]
+    },
+    {
+      "abandon_reason": "",
+      "authorization": null,
+      "cost": "low",
+      "created_at": "2026-11-25T12:00:00Z",
+      "discriminates": [
+        "H-0002"
+      ],
+      "expected_by_hypothesis": {
+        "H-0002": "engine loads the edited speed"
+      },
+      "external": false,
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, outcome, result_evidence"
+        }
+      ],
+      "id": "P-0002",
+      "interpretation_criterion": "load line shows speed 200 and no rejection",
+      "observation_authority": "controlled-mutation",
+      "outcome": "loaded speed=200",
+      "purpose": "verify",
+      "question": "Does a speed edit with a recomputed checksum load?",
+      "record_digest": "5acda380a67f3db76b306a0f566e445e2c0c23d43be9da321739a514940f8a2f",
+      "repeatable": true,
+      "requires_authorization": false,
+      "result_evidence": [
+        "E-0006"
+      ],
+      "reversibility": "reversible",
+      "risk": "low",
+      "sensitive": false,
+      "status": "DONE",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "variables_changed": [
+        "byte 10 and byte 8 per H-0002"
+      ],
+      "variables_controlled": [
+        "all other bytes"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "unknowns": [
+    {
+      "blocked_reason": "",
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "domain": "format",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "U-0001",
+      "question": "What do byte 5 (2 in every sample) and byte 9 (0x5A in every sample) mean?",
+      "recommended_probes": [
+        "mutate each byte alone and observe the engine"
+      ],
+      "record_digest": "21112d7e59773facdb5f53e39bcab698d27687a788c069b3deaf309917f5c90b",
+      "required_authority": "field-semantics",
+      "required_environment": "",
+      "requires_observation": false,
+      "resolution_evidence": [],
+      "resolution_rationale": "",
+      "severity": "medium",
+      "status": "OPEN",
+      "supporting_evidence": [
+        "E-0008"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z"
+    }
+  ]
+}

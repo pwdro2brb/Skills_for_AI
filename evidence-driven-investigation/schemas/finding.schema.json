@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "finding.schema.json",
+  "title": "Finding",
+  "description": "A material claim that may appear in the conclusion, classified with exactly one epistemic status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "claim",
+    "epistemic_status",
+    "claim_type",
+    "evidence",
+    "verification_evidence",
+    "contradicting_evidence",
+    "hypotheses",
+    "unknowns",
+    "contradictions",
+    "rationale",
+    "scope",
+    "created_at",
+    "updated_at",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^F-[0-9]{4,}$"
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "epistemic_status": {
+      "enum": [
+        "OBSERVED",
+        "DERIVED",
+        "INFERRED",
+        "ASSUMED",
+        "CONTRADICTED",
+        "UNKNOWN",
+        "VERIFIED",
+        "REJECTED",
+        "OUT_OF_SCOPE"
+      ]
+    },
+    "claim_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "verification_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "contradicting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^H-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^U-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^C-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

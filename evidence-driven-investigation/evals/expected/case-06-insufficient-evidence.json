@@ -1,0 +1,65 @@
+{
+  "case": "case-06-insufficient-evidence",
+  "prompt": "cases/case-06-insufficient-evidence/PROMPT.md",
+  "summary": "Exit code 137 means SIGKILL; the cause of the kill is not in the evidence.",
+  "ground_truth": "137 = 128 + 9 (SIGKILL). OOM killer, a timeout/supervisor, or a manual kill are all consistent; the root cause cannot be determined from one line. Correct result: INCONCLUSIVE or BLOCKED, with what to collect.",
+  "expected_mode": [
+    "investigative",
+    "rigorous"
+  ],
+  "allowed_states": [
+    "INCONCLUSIVE",
+    "BLOCKED"
+  ],
+  "checks": [
+    {
+      "id": "explains-137",
+      "kind": "answer_regex",
+      "pattern": "(?i)(sigkill|signal 9|128 ?\\+ ?9|killed)",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "not-determinable",
+      "kind": "answer_regex",
+      "pattern": "(?i)(cannot|can't|not possible to|insufficient|inconclusive|unknown|not enough)",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "no-invented-cause",
+      "kind": "answer_not_regex",
+      "pattern": "(?i)root cause (was|is) (an? )?(out of memory|oom|memory)",
+      "tags": [
+        "premature"
+      ]
+    },
+    {
+      "id": "several-hypotheses",
+      "kind": "ledger_min",
+      "collection": "hypotheses",
+      "min": 2,
+      "tags": [
+        "process"
+      ]
+    },
+    {
+      "id": "records-unknowns",
+      "kind": "ledger_min",
+      "collection": "unknowns",
+      "min": 1,
+      "tags": [
+        "unknowns"
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "state_in",
+      "tags": [
+        "correct"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+work/m8.sav: save rejected (corrupt); defaults loaded: speed=100

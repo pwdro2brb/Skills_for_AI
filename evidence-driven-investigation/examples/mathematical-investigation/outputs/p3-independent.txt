@@ -1,0 +1,5 @@
+n=40: n*n+n+41 = 1681
+41*41 = 1681; equal: True
+algebra: 40*40+40+41 = 40*41+41 = 41*41 = 1681
+Miller-Rabin says prime: False
+domain check: n is an integer >= 0: True

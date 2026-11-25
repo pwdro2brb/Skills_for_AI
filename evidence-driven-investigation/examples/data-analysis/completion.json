@@ -1,0 +1,74 @@
+{
+  "counts": {
+    "contradictions": 0,
+    "contradictions_open": 0,
+    "evidence": 5,
+    "evidence_active": 5,
+    "findings": 3,
+    "hypotheses": 4,
+    "obligations": 3,
+    "obligations_closed": 3,
+    "probes": 1,
+    "unknowns": 2,
+    "unknowns_open": 2
+  },
+  "gates": [
+    {
+      "description": "At least one obligation exists",
+      "failures": [],
+      "id": "G1",
+      "passed": true
+    },
+    {
+      "description": "Every critical obligation is CLOSED",
+      "failures": [],
+      "id": "G2",
+      "passed": true
+    },
+    {
+      "description": "No critical unknown is open",
+      "failures": [],
+      "id": "G3",
+      "passed": true
+    },
+    {
+      "description": "No critical contradiction is open",
+      "failures": [],
+      "id": "G4",
+      "passed": true
+    },
+    {
+      "description": "Verification is separate from construction for every closed obligation",
+      "failures": [],
+      "id": "G5",
+      "passed": true
+    },
+    {
+      "description": "Limitations are recorded",
+      "failures": [],
+      "id": "G6",
+      "passed": true
+    },
+    {
+      "description": "Nothing outside the critical set is pending, waived or out of scope",
+      "failures": [
+        "U-0001 (high) is OPEN"
+      ],
+      "id": "G7",
+      "passed": false
+    },
+    {
+      "description": "Mode requirements are met",
+      "failures": [],
+      "id": "G8",
+      "passed": true
+    }
+  ],
+  "ledger_digest": "c9560e6e6951c992748722585f99e74726e3a10b5975d8916ef5f5bd63fb19aa",
+  "mode": "investigative",
+  "reasons": [
+    "U-0001 (high) is OPEN"
+  ],
+  "state": "COMPLETE_WITH_LIMITATIONS",
+  "warnings": []
+}

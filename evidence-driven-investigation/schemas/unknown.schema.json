@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unknown.schema.json",
+  "title": "Residual unknown",
+  "description": "A bounded open question. Inference never closes an unknown; resolution requires evidence with the required authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "question",
+    "status",
+    "severity",
+    "domain",
+    "supporting_evidence",
+    "contradicting_evidence",
+    "required_authority",
+    "requires_observation",
+    "required_environment",
+    "recommended_probes",
+    "dependencies",
+    "blocked_reason",
+    "resolution_evidence",
+    "resolution_rationale",
+    "created_at",
+    "updated_at",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^U-[0-9]{4,}$"
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "INVESTIGATING",
+        "BLOCKED",
+        "CONTRADICTED",
+        "RESOLVED",
+        "OUT_OF_SCOPE"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "domain": {
+      "type": "string"
+    },
+    "supporting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "contradicting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "required_authority": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Claim type or authority tag that can close this unknown."
+    },
+    "requires_observation": {
+      "type": "boolean",
+      "description": "If true, only OBSERVED evidence can resolve it (DERIVED cannot)."
+    },
+    "required_environment": {
+      "type": "string"
+    },
+    "recommended_probes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^U-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "blocked_reason": {
+      "type": "string"
+    },
+    "resolution_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "resolution_rationale": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

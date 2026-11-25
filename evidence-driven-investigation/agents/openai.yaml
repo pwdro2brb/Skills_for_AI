@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evidence-driven investigation"
+  short_description: "Investigate under uncertainty with hypotheses, evidence ledgers and computed completion"
+  default_prompt: "Use $evidence-driven-investigation to investigate this with competing hypotheses, recorded evidence and a computed final state."

@@ -1,0 +1,4 @@
+error: Refusing to write: the change introduces validation errors:
+ERROR O02 O-0001: CLOSED requires active verification_evidence
+ERROR O02 O-0001: required case 'store_b' has no active evidence
+ERROR O02 O-0001: required case 'store_c' has no active evidence

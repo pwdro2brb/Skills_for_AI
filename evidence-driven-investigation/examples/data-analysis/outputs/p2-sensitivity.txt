@@ -1,0 +1,2 @@
+desktop: median difference -0.70 min; 5%-trimmed mean difference -0.16 min
+mobile: median difference +0.20 min; 5%-trimmed mean difference -0.01 min

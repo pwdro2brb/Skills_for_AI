@@ -1,0 +1,4 @@
+searched n=0..10000
+first counterexample: n=40 value=1681 smallest factor=41
+composite values found: 5852 of 10001
+first five: n=40:1681=41*41, n=41:1763=41*43, n=44:2021=43*47, n=49:2491=47*53, n=56:3233=53*61

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hypothesis.schema.json",
+  "title": "Hypothesis record",
+  "description": "A falsifiable candidate explanation with observable predictions. Confidence is a label with a rationale, not a probability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "statement",
+    "kind",
+    "alternatives",
+    "prior_basis",
+    "predictions",
+    "supporting_evidence",
+    "contradicting_evidence",
+    "verification_evidence",
+    "claim_type",
+    "confounders",
+    "status",
+    "next_probe",
+    "confidence",
+    "created_at",
+    "updated_at",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^H-[0-9]{4,}$"
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "primary",
+        "null",
+        "alternative",
+        "measurement-error",
+        "other"
+      ]
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^H-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "prior_basis": {
+      "type": "string",
+      "minLength": 1
+    },
+    "predictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "statement",
+          "result",
+          "evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^H-[0-9]{4,}\\.P[0-9]+$"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "description": "If this hypothesis is true, we expect to observe X under condition Y."
+          },
+          "result": {
+            "enum": [
+              "pending",
+              "confirmed",
+              "refuted",
+              "inconclusive"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^E-[0-9]{4,}$"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "supporting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "contradicting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "verification_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "claim_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "confounders": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "status": {
+      "enum": [
+        "PROPOSED",
+        "TESTING",
+        "SUPPORTED",
+        "CONTRADICTED",
+        "REJECTED",
+        "VERIFIED",
+        "OUT_OF_SCOPE"
+      ]
+    },
+    "status_rationale": {
+      "type": "string"
+    },
+    "next_probe": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "rationale"
+      ],
+      "properties": {
+        "label": {
+          "enum": [
+            "low",
+            "moderate",
+            "high"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "probe.schema.json",
+  "title": "Probe record",
+  "description": "A planned or executed probe/experiment that discriminates between hypotheses. Irreversible, external or sensitive probes require recorded authorization before they run.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "question",
+    "purpose",
+    "discriminates",
+    "variables_changed",
+    "variables_controlled",
+    "expected_by_hypothesis",
+    "cost",
+    "risk",
+    "reversibility",
+    "external",
+    "sensitive",
+    "repeatable",
+    "observation_authority",
+    "interpretation_criterion",
+    "requires_authorization",
+    "authorization",
+    "status",
+    "result_evidence",
+    "outcome",
+    "created_at",
+    "updated_at",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^P-[0-9]{4,}$"
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "enum": [
+        "discriminate",
+        "counterexample-search",
+        "reproduce",
+        "measure",
+        "verify",
+        "explore"
+      ]
+    },
+    "discriminates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^H-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "variables_changed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "variables_controlled": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expected_by_hypothesis": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Map of hypothesis ID to the result expected if that hypothesis is true."
+    },
+    "cost": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "reversibility": {
+      "enum": [
+        "reversible",
+        "partially-reversible",
+        "irreversible"
+      ]
+    },
+    "external": {
+      "type": "boolean",
+      "description": "Touches systems outside the local working copy (network services, production, other people's data)."
+    },
+    "sensitive": {
+      "type": "boolean",
+      "description": "Involves credentials, personal data or security-relevant actions."
+    },
+    "repeatable": {
+      "type": "boolean"
+    },
+    "observation_authority": {
+      "type": "string",
+      "pattern": "^([a-z0-9][a-z0-9-]*)?$"
+    },
+    "interpretation_criterion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requires_authorization": {
+      "type": "boolean"
+    },
+    "authorization": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "granted_by",
+        "at",
+        "scope"
+      ],
+      "properties": {
+        "granted_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "PLANNED",
+        "RUNNING",
+        "DONE",
+        "ABANDONED"
+      ]
+    },
+    "result_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "outcome": {
+      "type": "string"
+    },
+    "abandon_reason": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

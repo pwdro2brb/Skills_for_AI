@@ -1,0 +1,5 @@
+dark mode on: n=868 mean=25.78 min
+dark mode off: n=1132 mean=16.33 min
+difference on-off: +9.45 min (95% CI +8.56 to +10.34)
+desktop: n=880 dark-mode share=72% mean session=30.99 min
+mobile: n=1120 dark-mode share=21% mean session=12.14 min

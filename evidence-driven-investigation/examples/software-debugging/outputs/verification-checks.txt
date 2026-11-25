@@ -1,0 +1,7 @@
+PASS dot decimal
+PASS comma decimal
+PASS thousands separator
+PASS R$ prefix
+PASS empty store
+PASS store_a unchanged
+6/6 passed

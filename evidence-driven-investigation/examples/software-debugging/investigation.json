@@ -1,0 +1,828 @@
+{
+  "authority_extensions": {
+    "authorities": {},
+    "claim_types": {},
+    "rationale": ""
+  },
+  "conclusion": {
+    "claimed_state": "COMPLETE_VERIFIED",
+    "summary": "There were two independent causes, not one: decimal commas (store_b) and stores without orders (store_c). Both were confirmed by controlled mutation and fixed; the fix passes all six required cases. The empty-store return value is an assumption the user should confirm."
+  },
+  "contradictions": [],
+  "evidence": [
+    {
+      "artifact_identity": {
+        "kind": "none",
+        "value": ""
+      },
+      "authority": "user-report",
+      "claim": "User reports that average_price crashes for some stores, not all",
+      "collected_by": "single-agent",
+      "command_or_method": "",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0001",
+      "limitations": [],
+      "record_digest": "2379eb6000aa90c1a069f2555c86eee682087aab91752ee7b7bbdfa12b5e2355",
+      "reproducible": false,
+      "role": "observation",
+      "scope": "the user's description only; which stores and how it crashes are not stated",
+      "source": "bug report from the user",
+      "source_type": "user-observation",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": ""
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "pricing.py",
+        "value": "13d1bda6fbf26412946f55e446895b80564f31ab9e8504bb4c5318d657c2666d"
+      },
+      "authority": "runtime-trace",
+      "claim": "store_a: 3 rows, ok; store_b: 3 rows, raises ValueError; store_c: 0 rows, raises ZeroDivisionError",
+      "collected_by": "single-agent",
+      "command_or_method": "python probe_stores.py .",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0002",
+      "limitations": [
+        "exception messages not compared (they differ across Python versions)"
+      ],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p1-stores.txt",
+        "sha256": "5c62da73b43e86bba91167de8384884741cc76100abfed8adb94992ef55b9f76",
+        "shown_lines": 3,
+        "total_lines": 3
+      },
+      "record_digest": "8b46808813034eac7430e6f9cc55fe7c346a1dc9f13a9e58152f2c7dd82f9180",
+      "reproducible": true,
+      "role": "observation",
+      "scope": "the three sample exports with the original pricing.py",
+      "source": "",
+      "source_type": "runtime",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "pricing.py",
+        "value": "13d1bda6fbf26412946f55e446895b80564f31ab9e8504bb4c5318d657c2666d"
+      },
+      "authority": "controlled-mutation",
+      "claim": "Comma decimals alone raise ValueError and dots alone succeed; the empty list alone raises ZeroDivisionError and one row alone succeeds; in-memory rows fail the same way as the files",
+      "collected_by": "single-agent",
+      "command_or_method": "python probe_mutations.py",
+      "contradicts": [
+        "H-0003"
+      ],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0003",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/p2-mutations.txt",
+        "sha256": "242411f09d89b3610f19438af7bcb7f391ecf438ff4ec31181b17f4ec2fb6872",
+        "shown_lines": 6,
+        "total_lines": 6
+      },
+      "record_digest": "cca6e7b18be40dc8ea9a6525deee1aba496bff6e58859e32bc41e2ba7441b137",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "the original pricing.py, six controlled inputs",
+      "source": "",
+      "source_type": "runtime",
+      "status": "ACTIVE",
+      "supports": [
+        "H-0001",
+        "H-0002"
+      ],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "work/pricing.py",
+        "value": "e923431e2423e2f38f0a805bd92e4c5ae4b4e9cea5c118fedad5ac1b5b6fecaf"
+      },
+      "authority": "static-analysis",
+      "claim": "Patch: parse_price accepts comma decimals with dot thousands; average_price returns None for no orders",
+      "collected_by": "single-agent",
+      "command_or_method": "python show_patch.py pricing.py work/pricing.py",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0004",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/construction-diff.txt",
+        "sha256": "01aa91e11de658aa0fa7461f4262db49fc889b8866a189764dd739828bafff23",
+        "shown_lines": 23,
+        "total_lines": 23
+      },
+      "record_digest": "f88366cfafd1333d04382d52ddd5b31169dbddfb66d290532c5ed90686654576",
+      "reproducible": true,
+      "role": "construction",
+      "scope": "the textual change only; says nothing about behavior",
+      "source": "",
+      "source_type": "static",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "difflib"
+    },
+    {
+      "artifact_identity": {
+        "kind": "sha256",
+        "path": "work/pricing.py",
+        "value": "e923431e2423e2f38f0a805bd92e4c5ae4b4e9cea5c118fedad5ac1b5b6fecaf"
+      },
+      "authority": "unit-test",
+      "claim": "6/6 required cases pass on work/pricing.py, including store_a's unchanged average 16.58",
+      "collected_by": "single-agent",
+      "command_or_method": "python check_fix.py work",
+      "contradicts": [],
+      "derived_from": [],
+      "epistemic_status": "OBSERVED",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "E-0005",
+      "limitations": [],
+      "output_capture": {
+        "method": "full",
+        "path": "outputs/verification-checks.txt",
+        "sha256": "ca67bb439c1f625bd51fb268ed9fa717325cfde0e6cc1e2a42c3f8aa2862051c",
+        "shown_lines": 7,
+        "total_lines": 7
+      },
+      "record_digest": "d8922fc6960017c26a4c0f92fd4b9f6eac3cee478c69dbefc647213a9dee194b",
+      "reproducible": true,
+      "role": "verification",
+      "scope": "six inputs on the patched module; not the deployed application",
+      "source": "",
+      "source_type": "test",
+      "status": "ACTIVE",
+      "supports": [],
+      "timestamp": "2026-11-25T12:00:00Z",
+      "tool": "python"
+    }
+  ],
+  "findings": [
+    {
+      "claim": "store_b raises ValueError and store_c raises ZeroDivisionError; store_a works",
+      "claim_type": null,
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "OBSERVED",
+      "evidence": [
+        "E-0002"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0001",
+      "rationale": "",
+      "record_digest": "532a6ef5c8256286fa69f54a2de533dfb451c362ea00c832f71763a5c0f578c6",
+      "scope": "the three sample exports, original module",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "claim": "Decimal-comma prices cause the ValueError",
+      "claim_type": "root-cause-identified",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [
+        "H-0001"
+      ],
+      "id": "F-0002",
+      "rationale": "",
+      "record_digest": "b4e125c3e32ece57a09e488a39d1be1637b6b0fc657bc4bc97ea795507f42b90",
+      "scope": "original module",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003"
+      ]
+    },
+    {
+      "claim": "Stores without orders cause the ZeroDivisionError",
+      "claim_type": "root-cause-identified",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [
+        "H-0002"
+      ],
+      "id": "F-0003",
+      "rationale": "",
+      "record_digest": "4bee21da42a3ccc3aa06c4b55420f91e0b91292ace4a11b033bced5954965078",
+      "scope": "original module",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003"
+      ]
+    },
+    {
+      "claim": "The patched module handles every observed format and empty stores",
+      "claim_type": "function-works",
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "VERIFIED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0004",
+      "rationale": "",
+      "record_digest": "c0e8433baec7cfa4b06c955cede97c4035cbdd717ec038da7f723935013c9347",
+      "scope": "six tested inputs, patched module in work/",
+      "unknowns": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0005"
+      ]
+    },
+    {
+      "claim": "Returning None for a store without orders is acceptable",
+      "claim_type": null,
+      "contradicting_evidence": [],
+      "contradictions": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "epistemic_status": "ASSUMED",
+      "evidence": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "hypotheses": [],
+      "id": "F-0005",
+      "rationale": "no specification; None avoids inventing a price. Tracked as U-0001 for the user to decide",
+      "record_digest": "32755f4bd18d19efc72f036cae5dded44c0aa0844efca7cc7b27221aba5643d5",
+      "scope": "average_price on empty input",
+      "unknowns": [
+        "U-0001"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "hypotheses": [
+    {
+      "alternatives": [
+        "H-0002",
+        "H-0003"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "high",
+        "rationale": "flipping only the separator flips the outcome (E-0003)"
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0002"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0003"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to supporting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, confidence, predictions"
+        }
+      ],
+      "id": "H-0001",
+      "kind": "primary",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0003"
+          ],
+          "id": "H-0001.P1",
+          "result": "confirmed",
+          "statement": "If true, converting only the commas to dots removes the error, and adding commas to working rows creates it"
+        }
+      ],
+      "prior_basis": "store_b raises ValueError and its prices use commas (E-0002)",
+      "record_digest": "a85c4e367a8fc7bb0973e28e4fa44d848df5ee9c74b20400ee4beaa8b0e832b9",
+      "statement": "Prices with a decimal comma make parse_price raise ValueError",
+      "status": "SUPPORTED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0003"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001",
+        "H-0003"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "high",
+        "rationale": "flipping only the row count flips the outcome (E-0003)"
+      },
+      "confounders": [],
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "alternative H-0003"
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to supporting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, confidence, predictions"
+        }
+      ],
+      "id": "H-0002",
+      "kind": "alternative",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0003"
+          ],
+          "id": "H-0002.P1",
+          "result": "confirmed",
+          "statement": "If true, an empty list raises ZeroDivisionError and one valid row removes it"
+        }
+      ],
+      "prior_basis": "store_c has 0 rows and raises ZeroDivisionError (E-0002)",
+      "record_digest": "ea998498323694da7002cd62ad6c8f9fc08610e4faae9bf471b760351e926b3b",
+      "statement": "Stores with no orders make average_price divide by zero",
+      "status": "SUPPORTED",
+      "status_rationale": "",
+      "supporting_evidence": [
+        "E-0003"
+      ],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    },
+    {
+      "alternatives": [
+        "H-0001",
+        "H-0002"
+      ],
+      "claim_type": null,
+      "confidence": {
+        "label": "low",
+        "rationale": ""
+      },
+      "confounders": [],
+      "contradicting_evidence": [
+        "E-0003"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "linked",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "E-0003 added to contradicting_evidence"
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, predictions"
+        }
+      ],
+      "id": "H-0003",
+      "kind": "measurement-error",
+      "next_probe": "",
+      "predictions": [
+        {
+          "evidence": [
+            "E-0002",
+            "E-0003"
+          ],
+          "id": "H-0003.P1",
+          "result": "refuted",
+          "statement": "If true, the failing files are not read into the expected number of rows"
+        }
+      ],
+      "prior_basis": "store_b quotes its fields; the crash could be in the reader",
+      "record_digest": "c7b41e1375d25bdae8e83e9c2b187edc74b851dfca2598690a661ba70133833d",
+      "statement": "The failures come from reading the CSV files (encoding/quoting), not from pricing.py",
+      "status": "REJECTED",
+      "status_rationale": "",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": []
+    }
+  ],
+  "investigation": {
+    "completion_criteria": [
+      "every cause of the crash is identified by intervention",
+      "average_price handles all observed store formats",
+      "existing store averages are unchanged"
+    ],
+    "created_at": "2026-11-25T12:00:00Z",
+    "domains": [
+      "software"
+    ],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-11-25T12:00:00Z",
+        "detail": "mode=investigative"
+      }
+    ],
+    "id": "average-price-crash",
+    "mode": "investigative",
+    "objective": "Find why average_price() crashes for some stores, fix it, and verify the fix",
+    "scope_in": [
+      "pricing.py and the three store exports in this folder"
+    ],
+    "scope_out": [
+      "other modules that parse prices"
+    ],
+    "title": "average_price crashes for some stores"
+  },
+  "limitations": [
+    "Only the three sample exports were examined; real exports may use other formats",
+    "Tested with a single Python interpreter on one platform"
+  ],
+  "obligations": [
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "store_b": [
+          "E-0003"
+        ],
+        "store_c": [
+          "E-0003"
+        ]
+      },
+      "claim": "Every cause of the crash is identified by intervention",
+      "construction_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0001",
+      "kind": "root-cause",
+      "owner": "pricing.py",
+      "record_digest": "a158ee87b5a63bf039495396795218c41635615da58b81e98461144c5c564263",
+      "required_authority": "root-cause-identified",
+      "required_cases": [
+        "store_b",
+        "store_c"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0003"
+      ]
+    },
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "R$ prefix": [
+          "E-0005"
+        ],
+        "comma decimal": [
+          "E-0005"
+        ],
+        "dot decimal": [
+          "E-0005"
+        ],
+        "empty store": [
+          "E-0005"
+        ],
+        "thousands separator": [
+          "E-0005"
+        ]
+      },
+      "claim": "average_price handles every observed store format",
+      "construction_evidence": [
+        "E-0004"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [
+        "O-0001"
+      ],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, construction_evidence, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0002",
+      "kind": "fix",
+      "owner": "pricing.py",
+      "record_digest": "d64def27b8c0e8b112a52aa9fe0b39c9cc336962dbf45d7a068ac16095a0df1e",
+      "required_authority": "function-works",
+      "required_cases": [
+        "dot decimal",
+        "comma decimal",
+        "thousands separator",
+        "R$ prefix",
+        "empty store"
+      ],
+      "severity": "critical",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0005"
+      ]
+    },
+    {
+      "applies_to": null,
+      "blocking_contradictions": [],
+      "blocking_unknowns": [],
+      "case_evidence": {
+        "store_a": [
+          "E-0005"
+        ]
+      },
+      "claim": "Averages of stores that worked before are unchanged",
+      "construction_evidence": [
+        "E-0004"
+      ],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, construction_evidence, verification_evidence, case_evidence"
+        }
+      ],
+      "id": "O-0003",
+      "kind": "regression",
+      "owner": "pricing.py",
+      "record_digest": "87dd864a9b632f4cf126aa50c6ee6737cb6578a720ca6a90e0ee8efe1ee425f6",
+      "required_authority": "regression-absent",
+      "required_cases": [
+        "store_a"
+      ],
+      "severity": "major",
+      "status": "CLOSED",
+      "status_rationale": "",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "verification_evidence": [
+        "E-0005"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "abandon_reason": "",
+      "authorization": null,
+      "cost": "low",
+      "created_at": "2026-11-25T12:00:00Z",
+      "discriminates": [
+        "H-0001",
+        "H-0002",
+        "H-0003"
+      ],
+      "expected_by_hypothesis": {
+        "H-0001": "only the comma variants raise ValueError",
+        "H-0002": "only the empty list raises ZeroDivisionError",
+        "H-0003": "in-memory rows never fail; only file reading fails"
+      },
+      "external": false,
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        },
+        {
+          "action": "updated",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": "status, outcome, result_evidence"
+        }
+      ],
+      "id": "P-0001",
+      "interpretation_criterion": "a hypothesis survives only if flipping its variable alone flips the outcome",
+      "observation_authority": "controlled-mutation",
+      "outcome": "H-0001 and H-0002 both predicted their flips; H-0003 predicted no in-memory failure and was wrong",
+      "purpose": "discriminate",
+      "question": "Which variable produces each failure?",
+      "record_digest": "c049a213d833a961953f5fca4312bb99646f8001bf1d32b08f376e03cf7d9a92",
+      "repeatable": true,
+      "requires_authorization": false,
+      "result_evidence": [
+        "E-0003"
+      ],
+      "reversibility": "reversible",
+      "risk": "low",
+      "sensitive": false,
+      "status": "DONE",
+      "updated_at": "2026-11-25T12:00:00Z",
+      "variables_changed": [
+        "decimal separator",
+        "number of rows"
+      ],
+      "variables_controlled": [
+        "same values, same module, no file I/O"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "unknowns": [
+    {
+      "blocked_reason": "",
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "domain": "product decision",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "U-0001",
+      "question": "What should average_price return for a store with no orders?",
+      "recommended_probes": [
+        "ask the user or the product owner"
+      ],
+      "record_digest": "05b1e40818399e075fb39c534ef80f9e79ed1a29bca281d4dd2133b2606ddf4a",
+      "required_authority": "user-report",
+      "required_environment": "",
+      "requires_observation": false,
+      "resolution_evidence": [],
+      "resolution_rationale": "",
+      "severity": "medium",
+      "status": "OPEN",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z"
+    },
+    {
+      "blocked_reason": "",
+      "contradicting_evidence": [],
+      "created_at": "2026-11-25T12:00:00Z",
+      "dependencies": [],
+      "domain": "data formats",
+      "history": [
+        {
+          "action": "created",
+          "at": "2026-11-25T12:00:00Z",
+          "detail": ""
+        }
+      ],
+      "id": "U-0002",
+      "question": "Do real exports also use US thousands separators such as '1,234.50'?",
+      "recommended_probes": [
+        "inspect a sample of real exports from every store"
+      ],
+      "record_digest": "4225d9e047a63b45796d69488a37a433d3e6418a860c25b19f2d60e10a5348f5",
+      "required_authority": "primary-source",
+      "required_environment": "",
+      "requires_observation": false,
+      "resolution_evidence": [],
+      "resolution_rationale": "",
+      "severity": "medium",
+      "status": "OPEN",
+      "supporting_evidence": [],
+      "updated_at": "2026-11-25T12:00:00Z"
+    }
+  ]
+}

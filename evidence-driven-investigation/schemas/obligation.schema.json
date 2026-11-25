@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "obligation.schema.json",
+  "title": "Obligation",
+  "description": "A verifiable requirement for completion. Closes only with verification evidence of the required authority covering every required case, with no open blockers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "claim",
+    "owner",
+    "kind",
+    "severity",
+    "required_cases",
+    "case_evidence",
+    "required_authority",
+    "applies_to",
+    "construction_evidence",
+    "verification_evidence",
+    "status",
+    "status_rationale",
+    "blocking_unknowns",
+    "blocking_contradictions",
+    "dependencies",
+    "created_at",
+    "updated_at",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^O-[0-9]{4,}$"
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner": {
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "behavior",
+        "root-cause",
+        "fix",
+        "mitigation",
+        "regression",
+        "reconstruction",
+        "proof",
+        "analysis",
+        "documentation",
+        "other"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "critical",
+        "major",
+        "minor"
+      ]
+    },
+    "required_cases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "case_evidence": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^E-[0-9]{4,}$"
+        },
+        "uniqueItems": true
+      }
+    },
+    "required_authority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "applies_to": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Artifact identity value (hash, commit, version) the verification must be about."
+    },
+    "construction_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "verification_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "CLOSED",
+        "FAILED",
+        "BLOCKED",
+        "WAIVED"
+      ]
+    },
+    "status_rationale": {
+      "type": "string"
+    },
+    "blocking_unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^U-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "blocking_contradictions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^C-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^O-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

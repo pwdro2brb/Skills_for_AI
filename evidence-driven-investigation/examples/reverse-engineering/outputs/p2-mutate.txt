@@ -1,0 +1,1 @@
+work/m8.sav: offset 8 46 -> 71; all other 27 bytes identical to work/s1.sav

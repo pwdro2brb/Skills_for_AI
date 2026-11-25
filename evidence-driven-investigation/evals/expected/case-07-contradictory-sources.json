@@ -1,0 +1,68 @@
+{
+  "case": "case-07-contradictory-sources",
+  "prompt": "cases/case-07-contradictory-sources/PROMPT.md",
+  "summary": "Docs disagree (3 vs 5); the changelog and the lock file show the installed 2.8.1 predates the change.",
+  "ground_truth": "3. requirements.lock pins fetchkit 2.8.1; the default changed to 5 in 3.0.0 (CHANGELOG).",
+  "expected_mode": [
+    "investigative",
+    "rigorous"
+  ],
+  "allowed_states": [
+    "COMPLETE_VERIFIED",
+    "COMPLETE_WITH_LIMITATIONS"
+  ],
+  "checks": [
+    {
+      "id": "answers-3",
+      "kind": "answer_regex",
+      "pattern": "(?i)(default[^.]{0,40}\\b3\\b|\\b3\\b[^.]{0,40}(retries|default))",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "cites-version",
+      "kind": "answer_regex",
+      "pattern": "2\\.8",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "not-5",
+      "kind": "answer_not_regex",
+      "pattern": "(?i)default (number of )?retries (is|=) 5",
+      "tags": [
+        "premature",
+        "correct"
+      ]
+    },
+    {
+      "id": "contradiction-recorded",
+      "kind": "ledger_has",
+      "collection": "contradictions",
+      "where": {},
+      "tags": [
+        "process"
+      ]
+    },
+    {
+      "id": "resolved-by-version",
+      "kind": "ledger_has",
+      "collection": "contradictions",
+      "where": {
+        "status": "RESOLVED"
+      },
+      "tags": [
+        "process"
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "state_in",
+      "tags": [
+        "correct"
+      ]
+    }
+  ]
+}

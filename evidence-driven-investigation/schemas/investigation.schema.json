@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "investigation.schema.json",
+  "title": "Investigation ledger",
+  "description": "Canonical ledger for one investigation. Created by scripts/init_investigation.py and modified only through the record_*/update_* scripts. The final state is never stored as truth; it is computed by scripts/evaluate_completion.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "investigation",
+    "limitations",
+    "authority_extensions",
+    "evidence",
+    "hypotheses",
+    "probes",
+    "unknowns",
+    "contradictions",
+    "obligations",
+    "findings",
+    "conclusion"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "investigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "objective",
+        "scope_in",
+        "scope_out",
+        "mode",
+        "domains",
+        "completion_criteria",
+        "created_at",
+        "history"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_in": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "scope_out": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "mode": {
+          "enum": [
+            "light",
+            "investigative",
+            "rigorous"
+          ]
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "software",
+              "reverse-engineering",
+              "mathematics",
+              "data-analysis",
+              "research",
+              "other"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "completion_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "at",
+              "action",
+              "detail"
+            ],
+            "properties": {
+              "at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "detail": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "authority_extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rationale",
+        "authorities",
+        "claim_types"
+      ],
+      "properties": {
+        "rationale": {
+          "type": "string"
+        },
+        "authorities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "description",
+              "source_types",
+              "rationale"
+            ],
+            "properties": {
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_types": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "enum": [
+                    "runtime",
+                    "static",
+                    "document",
+                    "test",
+                    "calculation",
+                    "formal-proof",
+                    "user-observation"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "claim_types": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "description",
+              "any_of",
+              "rationale"
+            ],
+            "properties": {
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "any_of": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "authorities",
+                      "min"
+                    ],
+                    "properties": {
+                      "authorities": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "min": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "evidence.schema.json"
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "$ref": "hypothesis.schema.json"
+      }
+    },
+    "probes": {
+      "type": "array",
+      "items": {
+        "$ref": "probe.schema.json"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "$ref": "unknown.schema.json"
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "$ref": "contradiction.schema.json"
+      }
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "$ref": "obligation.schema.json"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "finding.schema.json"
+      }
+    },
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "claimed_state"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "claimed_state": {
+          "enum": [
+            "COMPLETE_VERIFIED",
+            "COMPLETE_WITH_LIMITATIONS",
+            "PARTIALLY_VERIFIED",
+            "MITIGATED_NOT_RESOLVED",
+            "BLOCKED",
+            "INCONCLUSIVE",
+            "FAILED",
+            null
+          ]
+        }
+      }
+    }
+  }
+}

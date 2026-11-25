@@ -1,0 +1,84 @@
+{
+  "case": "case-01-ambiguous-bug",
+  "prompt": "cases/case-01-ambiguous-bug/PROMPT.md",
+  "summary": "Wrong day counts for some rows; candidate causes include day/month ambiguity, DST and off-by-one.",
+  "ground_truth": "parse() tries %m/%d/%Y before %d/%m/%Y, so dates whose day is <= 12 are read with day and month swapped (rows 3 and 5). DST and off-by-one are red herrings (naive datetimes; row 6 is correct).",
+  "expected_mode": [
+    "investigative",
+    "rigorous"
+  ],
+  "allowed_states": [
+    "COMPLETE_VERIFIED",
+    "COMPLETE_WITH_LIMITATIONS"
+  ],
+  "checks": [
+    {
+      "id": "names-cause",
+      "kind": "answer_regex",
+      "pattern": "(?i)(day.{0,20}month|month.{0,20}day|dd/mm|mm/dd|%d/%m|%m/%d|ambigu)",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "fix-works",
+      "kind": "command_succeeds",
+      "command": [
+        "python",
+        "-c",
+        "import csv,dates;rows=list(csv.DictReader(open('rows.csv')));bad=[r for r in rows if dates.days_between(r['start'],r['end'])!=int(r['expected_days'])];print(len(bad));raise SystemExit(len(bad))"
+      ],
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "no-dst-claim",
+      "kind": "answer_not_regex",
+      "pattern": "(?i)caused by (daylight|dst)",
+      "tags": [
+        "premature"
+      ]
+    },
+    {
+      "id": "competing-hypotheses",
+      "kind": "ledger_min",
+      "collection": "hypotheses",
+      "min": 2,
+      "tags": [
+        "process"
+      ]
+    },
+    {
+      "id": "discriminating-probe",
+      "kind": "ledger_has",
+      "collection": "probes",
+      "where": {
+        "status": "DONE"
+      },
+      "tags": [
+        "process",
+        "premature"
+      ]
+    },
+    {
+      "id": "root-cause-authority",
+      "kind": "ledger_has",
+      "collection": "obligations",
+      "where": {
+        "kind": "root-cause",
+        "status": "CLOSED"
+      },
+      "tags": [
+        "authority"
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "state_in",
+      "tags": [
+        "correct"
+      ]
+    }
+  ]
+}

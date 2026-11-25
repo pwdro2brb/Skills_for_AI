@@ -1,0 +1,4 @@
+work/s1.sav: byte8=46 sum(bytes[9:])&0xFF=46 MATCH
+work/s2.sav: byte8=66 sum(bytes[9:])&0xFF=66 MATCH
+work/s3.sav: byte8=89 sum(bytes[9:])&0xFF=89 MATCH
+work/s4.sav: byte8=242 sum(bytes[9:])&0xFF=242 MATCH

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contradiction.schema.json",
+  "title": "Contradiction",
+  "description": "A conflict between claims or evidence. Never deleted. Resolution requires new evidence supporting a specific explanation, not a choice of the more convincing side.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "claim_a",
+    "claim_b",
+    "evidence_a",
+    "evidence_b",
+    "severity",
+    "possible_explanations",
+    "status",
+    "resolution",
+    "resolution_evidence",
+    "created_at",
+    "updated_at",
+    "history",
+    "record_digest"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^C-[0-9]{4,}$"
+    },
+    "claim_a": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_b": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_a": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "evidence_b": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "possible_explanations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "explanation",
+          "status",
+          "evidence"
+        ],
+        "properties": {
+          "category": {
+            "enum": [
+              "version",
+              "environment",
+              "tool-error",
+              "interpretation",
+              "nondeterminism",
+              "sample-size",
+              "more-complex-hypothesis",
+              "tampered-data",
+              "ambiguous-definition",
+              "authority-mismatch",
+              "other"
+            ]
+          },
+          "explanation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "untested",
+              "ruled-out",
+              "supported"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^E-[0-9]{4,}$"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "INVESTIGATING",
+        "RESOLVED",
+        "OUT_OF_SCOPE"
+      ]
+    },
+    "resolution": {
+      "type": "string"
+    },
+    "resolution_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^E-[0-9]{4,}$"
+      },
+      "uniqueItems": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "action",
+          "detail"
+        ],
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

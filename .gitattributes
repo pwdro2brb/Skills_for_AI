@@ -1,0 +1,5 @@
+# Fixtures are hashed by the examples and evals: keep LF everywhere.
+* text=auto eol=lf
+*.dat binary
+*.sav binary
+*.zip binary

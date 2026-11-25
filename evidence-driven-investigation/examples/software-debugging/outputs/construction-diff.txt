@@ -1,0 +1,23 @@
+--- pricing.py
++++ work/pricing.py
+@@ -1,11 +1,17 @@
+-"""Toy module with a bug report attached: "average_price crashes for some stores"."""
++"""The fix, copied to work/pricing.py by build_example.py (the original stays untouched)."""
+ 
+ 
+ def parse_price(text):
+-    """Parse a price string like '12.50' or 'R$ 12.50' into a float."""
+-    return float(text.strip().replace("R$", ""))
++    """Parse '12.50', '12,50', 'R$ 1.234,50' (Brazilian thousands/decimal) into a float."""
++    text = text.strip().replace("R$", "").strip()
++    if "," in text:
++        text = text.replace(".", "").replace(",", ".")
++    return float(text)
+ 
+ 
+ def average_price(rows):
++    """Average price, or None when there are no orders (no price to average)."""
+     prices = [parse_price(r["price"]) for r in rows]
++    if not prices:
++        return None
+     return sum(prices) / len(prices)

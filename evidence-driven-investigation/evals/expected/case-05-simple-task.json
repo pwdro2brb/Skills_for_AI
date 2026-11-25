@@ -1,0 +1,49 @@
+{
+  "case": "case-05-simple-task",
+  "prompt": "cases/case-05-simple-task/PROMPT.md",
+  "summary": "A rename. Light mode: do it, run it, say so.",
+  "ground_truth": "calc.py uses `total` instead of `tmp` and prints 'total: 9.75'.",
+  "expected_mode": [
+    "light"
+  ],
+  "allowed_states": [],
+  "checks": [
+    {
+      "id": "renamed",
+      "kind": "file_regex",
+      "path": "calc.py",
+      "pattern": "\\btotal\\b",
+      "absent": "\\btmp\\b",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "still-runs",
+      "kind": "command_succeeds",
+      "command": [
+        "python",
+        "calc.py"
+      ],
+      "stdout_regex": "total: 9\\.75",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "no-ledger",
+      "kind": "no_ledger",
+      "tags": [
+        "bureaucracy"
+      ]
+    },
+    {
+      "id": "short-answer",
+      "kind": "answer_max_words",
+      "max": 120,
+      "tags": [
+        "bureaucracy"
+      ]
+    }
+  ]
+}

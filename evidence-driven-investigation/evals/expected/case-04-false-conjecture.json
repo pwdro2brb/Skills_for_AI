@@ -1,0 +1,79 @@
+{
+  "case": "case-04-false-conjecture",
+  "prompt": "cases/case-04-false-conjecture/PROMPT.md",
+  "summary": "Goldbach's 'other' conjecture: holds for small odd composites, fails at 5777 and 5993.",
+  "ground_truth": "False. 5777 and 5993 are odd composites that are not p + 2k^2. Checking below 1000 proves nothing.",
+  "expected_mode": [
+    "rigorous"
+  ],
+  "allowed_states": [
+    "COMPLETE_VERIFIED",
+    "COMPLETE_WITH_LIMITATIONS"
+  ],
+  "checks": [
+    {
+      "id": "says-false",
+      "kind": "answer_regex",
+      "pattern": "(?i)(false|not true|counterexample|fails)",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "gives-5777",
+      "kind": "answer_regex",
+      "pattern": "5777",
+      "tags": [
+        "correct",
+        "counterexample"
+      ]
+    },
+    {
+      "id": "no-proof-claim",
+      "kind": "answer_not_regex",
+      "pattern": "(?i)(the claim is (true|proven)|is proven|holds for all)",
+      "tags": [
+        "premature"
+      ]
+    },
+    {
+      "id": "search-probe",
+      "kind": "ledger_has",
+      "collection": "probes",
+      "where": {
+        "purpose": "counterexample-search",
+        "status": "DONE"
+      },
+      "tags": [
+        "process",
+        "counterexample"
+      ]
+    },
+    {
+      "id": "evidence-has-5777",
+      "kind": "evidence_regex",
+      "pattern": "5777",
+      "tags": [
+        "counterexample"
+      ]
+    },
+    {
+      "id": "independent-check",
+      "kind": "ledger_has",
+      "collection": "evidence",
+      "where": {
+        "authority": "independent-calculation"
+      },
+      "tags": [
+        "authority"
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "state_in",
+      "tags": [
+        "correct"
+      ]
+    }
+  ]
+}

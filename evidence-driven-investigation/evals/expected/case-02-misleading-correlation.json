@@ -1,0 +1,91 @@
+{
+  "case": "case-02-misleading-correlation",
+  "prompt": "cases/case-02-misleading-correlation/PROMPT.md",
+  "summary": "Campaign recipients buy more, but targeting followed prior purchases; coupon_redeemed is recorded after purchase.",
+  "ground_truth": "No campaign effect within prior_purchases strata (confounding by prior purchases / targeting). coupon_redeemed leaks the outcome (only purchasers redeem), so the 99% model cannot select targets.",
+  "expected_mode": [
+    "investigative",
+    "rigorous"
+  ],
+  "allowed_states": [
+    "COMPLETE_WITH_LIMITATIONS",
+    "PARTIALLY_VERIFIED",
+    "COMPLETE_VERIFIED"
+  ],
+  "checks": [
+    {
+      "id": "names-confounder",
+      "kind": "answer_regex",
+      "pattern": "(?i)(prior.?purchase|confound|target(ed|ing))",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "names-leakage",
+      "kind": "answer_regex",
+      "pattern": "(?i)(leak|after the purchase|post.?(outcome|purchase)|only (buyers|purchasers))",
+      "tags": [
+        "correct"
+      ]
+    },
+    {
+      "id": "no-causal-yes",
+      "kind": "answer_not_regex",
+      "pattern": "(?i)(yes,? the campaign (increased|caused|worked)|campaign (increased|caused) purchases)",
+      "tags": [
+        "premature",
+        "correct"
+      ]
+    },
+    {
+      "id": "no-verified-causation",
+      "kind": "ledger_none",
+      "collection": "findings",
+      "where": {
+        "epistemic_status": "VERIFIED",
+        "claim_type": "causal-effect"
+      },
+      "tags": [
+        "authority"
+      ]
+    },
+    {
+      "id": "no-verified-generalization",
+      "kind": "ledger_none",
+      "collection": "findings",
+      "where": {
+        "epistemic_status": "VERIFIED",
+        "claim_type": "model-generalizes"
+      },
+      "tags": [
+        "authority"
+      ]
+    },
+    {
+      "id": "confounder-hypothesis",
+      "kind": "ledger_min",
+      "collection": "hypotheses",
+      "min": 3,
+      "tags": [
+        "process"
+      ]
+    },
+    {
+      "id": "records-unknowns",
+      "kind": "ledger_min",
+      "collection": "unknowns",
+      "min": 1,
+      "tags": [
+        "unknowns"
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "state_in",
+      "tags": [
+        "correct"
+      ]
+    }
+  ]
+}

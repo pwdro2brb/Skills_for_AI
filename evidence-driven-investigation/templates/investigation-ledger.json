@@ -1,0 +1,38 @@
+{
+  "authority_extensions": {
+    "authorities": {},
+    "claim_types": {},
+    "rationale": ""
+  },
+  "conclusion": {
+    "claimed_state": null,
+    "summary": ""
+  },
+  "contradictions": [],
+  "evidence": [],
+  "findings": [],
+  "hypotheses": [],
+  "investigation": {
+    "completion_criteria": [],
+    "created_at": "2026-01-01T00:00:00Z",
+    "domains": [],
+    "history": [
+      {
+        "action": "created",
+        "at": "2026-01-01T00:00:00Z",
+        "detail": "mode=investigative"
+      }
+    ],
+    "id": "example",
+    "mode": "investigative",
+    "objective": "Describe the objective",
+    "scope_in": [],
+    "scope_out": [],
+    "title": "Example"
+  },
+  "limitations": [],
+  "obligations": [],
+  "probes": [],
+  "schema_version": 1,
+  "unknowns": []
+}
