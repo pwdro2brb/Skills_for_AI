@@ -1,9 +1,9 @@
 ---
 name: evidence-driven-investigation
-description: Evidence-gated method for tasks with material uncertainty - debugging with an unknown cause, reverse engineering, exploratory data analysis, mathematical conjectures, conflicting sources, and conclusions that must be audited or reproduced. Separates observation from inference, tests competing falsifiable hypotheses, tracks unknowns and contradictions in a JSON ledger, and computes the final state with scripts instead of declaring it. Use when the cause is unknown, several explanations compete, the user asks for proof, audit or high confidence, or a wrong answer would be costly. For routine tasks with a simple check it prescribes a light mode (do, verify, report) with no ledger.
+description: Evidence-gated method for tasks with material uncertainty - debugging with an unknown cause, reverse engineering, exploratory data analysis, mathematical conjectures, conflicting sources, and conclusions that must be audited or reproduced. Separates observation from inference, tests competing falsifiable hypotheses, tracks unknowns and contradictions in a JSON ledger, and computes the final state with scripts instead of declaring it. Use when the cause is unknown, several explanations compete, the user asks for an audit or high confidence, or a wrong answer would be costly. Light mode (do, verify, report, no ledger) is the default and covers routine tasks with a simple check, including standard math or coding exercises; being invoked by name does not by itself call for a ledger.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Evidence-driven investigation
@@ -19,7 +19,19 @@ work is complete.
 | --- | --- | --- |
 | **Light** | Low risk, known procedure, simple check, no competing explanations. Converting a file, fixing formatting, renaming a variable, a calculation done with a tool. | Do it, run one real check, report the result and the check in one or two lines. **No ledger, no hypotheses, no report.** |
 | **Investigative** | Cause unknown, unexpected behavior, several plausible explanations, need to learn how something works: debugging, reverse engineering, exploratory analysis. | Ledger with competing hypotheses, probes, evidence, unknowns, obligations; concise report. |
-| **Rigorous** | Extraordinary claim, mathematical or scientific result, security implications, significant impact, harm if wrong, must be reproducible, or the user asks for proof, audit or high confidence. | Everything in investigative mode, plus null and alternative hypotheses, a counterexample search, an independent critic, an independent verification route, reproducible evidence and the rigorous report. |
+| **Rigorous** | Extraordinary claim, new mathematical or scientific result, security implications, significant impact, harm if wrong, must be reproducible, or the user asks for an audit or high confidence. | Everything in investigative mode, plus null and alternative hypotheses, a counterexample search, an independent critic, an independent verification route, reproducible evidence and the rigorous report. |
+
+**Light is the default.** Start in light mode and leave it only when a
+criterion of another row applies to the task itself:
+
+- Being invoked by name, or a prompt that says "use this skill", is not such a
+  criterion. Neither is the word "prove" or "show" in a standard exercise.
+- A task with a known procedure and an answer you can check (a textbook
+  integral or proof, a small bug whose cause is visible, a routine refactor) is
+  light, in mathematics as anywhere else. The one real check still matters:
+  substitute the answer, run the code, check the domain.
+- Only an explicit request for a ledger, report or audit overrides this. Then
+  follow it, and say in one line that light mode would have been enough.
 
 Escalate from light to investigative as soon as a check fails unexpectedly, a
 second explanation is plausible, or you are about to write "probably". Escalate

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.1 — 2026-11-25
+
+- Light mode is now the explicit default. Being invoked by name, or the word
+  "prove" in a standard exercise, no longer counts as a reason to build a
+  ledger; only the task's own uncertainty or stakes, or an explicit request for
+  a ledger, report or audit, do. Prompted by a first informal comparison in
+  which the skill ran full investigations on two simple problems.
+- `agents/openai.yaml`: the default prompt no longer asks for competing
+  hypotheses and a computed state up front.
+- The reverse-engineering example now prints paths with `/` on every platform,
+  so it rebuilds byte-for-byte on Windows too. The full test suite passes on
+  Windows 11.
+
 ## 1.0.0 — 2026-11-25
 
 First release.

@@ -141,7 +141,7 @@ E("record_obligation", "--id", "O-0003", "--update", "--add-construction", "E-00
   "--case-evidence", "speed edited=E-0006", "--status", "CLOSED")
 
 # Unknown bytes stay unknown
-out = ex.probe("p5-constant-bytes", "-c", "import glob; [print(p, 'byte5=%d byte9=%d' % (d[5], d[9])) "
+out = ex.probe("p5-constant-bytes", "-c", "import glob; [print(p.replace('\\\\', '/'), 'byte5=%d byte9=%d' % (d[5], d[9])) "
                "for p in sorted(glob.glob('work/s*.sav')) for d in [open(p, 'rb').read()]]")
 E("record_evidence", "--claim", "Byte 5 is 2 and byte 9 is 90 (0x5A) in all four samples",
   "--source-type", "static", "--authority", "byte-inspection", "--tool", "python",

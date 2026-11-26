@@ -93,7 +93,7 @@ Build the installable package (only runtime files; no tests, evals or examples):
 
 ```
 python tools/package_skill.py evidence-driven-investigation
-# -> dist/evidence-driven-investigation-1.0.0.zip
+# -> dist/evidence-driven-investigation-1.0.1.zip
 ```
 
 Then, depending on the agent:

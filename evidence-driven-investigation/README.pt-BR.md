@@ -36,7 +36,7 @@ de `COMPLETE_VERIFIED` a `FAILED`.
 python tools/package_skill.py evidence-driven-investigation
 ```
 
-Descompacte `dist/evidence-driven-investigation-1.0.0.zip` em
+Descompacte `dist/evidence-driven-investigation-1.0.1.zip` em
 `~/.claude/skills/` (Claude Code) ou na pasta de skills do seu agente.
 
 ## Testes
