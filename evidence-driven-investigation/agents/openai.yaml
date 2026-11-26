@@ -1,4 +1,4 @@
 interface:
   display_name: "Evidence-driven investigation"
   short_description: "Investigate under uncertainty with hypotheses, evidence ledgers and computed completion"
-  default_prompt: "Use $evidence-driven-investigation to investigate this with competing hypotheses, recorded evidence and a computed final state."
+  default_prompt: "Use $evidence-driven-investigation on this task: start in light mode (do, check, report) and escalate to a ledger only if the task's uncertainty or stakes call for it."
